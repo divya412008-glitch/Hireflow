@@ -1,96 +1,39 @@
-<!-- Post Job Modal -->
+<nav>
 
-<div id="jobModal" class="modal-overlay">
+    <button
+        class="nav-item active"
+        onclick="location.href='index.html'">
+        Dashboard
+    </button>
 
-    <div class="modal">
+    <button
+        class="nav-item"
+        onclick="location.href='jobs.html'">
+        Jobs
+    </button>
 
-        <div class="modal-header">
+    <button
+        class="nav-item"
+        onclick="location.href='candidates.html'">
+        Candidates
+    </button>
 
-            <div>
-                <span class="modal-kicker">HIRING</span>
-                <h2>Create New Job</h2>
-                <p>Open a new position and start receiving applicants.</p>
-            </div>
+    <button
+        class="nav-item"
+        onclick="location.href='applications.html'">
+        Applications
+    </button>
 
-            <button id="closeJobModal" class="close-modal">
-                ×
-            </button>
+    <button
+        class="nav-item"
+        onclick="location.href='interviews.html'">
+        Interviews
+    </button>
 
-        </div>
+    <button
+        class="nav-item"
+        onclick="location.href='feedback.html'">
+        Feedback
+    </button>
 
-        <form id="jobForm">
-
-            <div class="form-group">
-                <label>Job Title</label>
-                <input
-                    type="text"
-                    id="jobTitle"
-                    placeholder="e.g. Senior Java Developer"
-                    required
-                >
-            </div>
-
-            <div class="form-row">
-
-                <div class="form-group">
-                    <label>Location</label>
-                    <input
-                        type="text"
-                        id="jobLocation"
-                        placeholder="e.g. Chennai"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label>Experience</label>
-                    <input
-                        type="number"
-                        id="jobExperience"
-                        placeholder="Years"
-                        min="0"
-                        required
-                    >
-                </div>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Description</label>
-
-                <textarea
-                    id="jobDescription"
-                    rows="5"
-                    placeholder="Describe the role, responsibilities and requirements..."
-                    required
-                ></textarea>
-
-            </div>
-
-            <div id="jobFormMessage" class="form-message"></div>
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    id="cancelJob"
-                    class="cancel-btn"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    type="submit"
-                    class="save-job-btn"
-                >
-                    Create Job
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
+</nav>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HireFlow | Jobs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .jobs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .jobs-header h1 {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .jobs-header p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .job-card {
+            padding: 22px;
+            border-radius: 20px;
+
+            background: var(--card);
+            border: 1px solid var(--card-border);
+
+            backdrop-filter: blur(20px);
+
+            transition:
+                transform 0.25s ease,
+                border 0.25s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .job-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .job-icon {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            font-weight: 800;
+            font-size: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--pink)
+                );
+        }
+
+        .job-status {
+            height: fit-content;
+
+            padding: 6px 10px;
+            border-radius: 8px;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            color: var(--green);
+
+            background: rgba(34, 197, 94, 0.08);
+        }
+
+        .job-card h3 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .job-location {
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 14px;
+        }
+
+        .job-description {
+            color: #aab3c7;
+            font-size: 11px;
+            line-height: 1.6;
+            min-height: 52px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+
+            margin-top: 18px;
+        }
+
+        .job-meta span {
+            padding: 7px 10px;
+
+            border-radius: 8px;
+
+            background: rgba(255,255,255,0.04);
+
+            color: #b7c0d3;
+
+            font-size: 10px;
+        }
+
+        @media (max-width: 1100px) {
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">H</div>
+
+            <div>
+                <h2>HireFlow</h2>
+                <span>Applicant Tracking</span>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <button
+                class="nav-item"
+                onclick="location.href='index.html'">
+                Dashboard
+            </button>
+
+            <button
+                class="nav-item active">
+                Jobs
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="alert('Candidates page coming next')">
+                Candidates
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="alert('Applications page coming next')">
+                Applications
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="alert('Interviews page coming next')">
+                Interviews
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="alert('Feedback page coming next')">
+                Feedback
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <div class="jobs-header">
+
+            <div>
+
+                <h1>Job Openings</h1>
+
+                <p>
+                    Manage your open positions and hiring opportunities.
+                </p>
+
+            </div>
+
+            <button
+                class="add-job-btn"
+                onclick="location.href='index.html'">
+
+                + Post Job
+
+            </button>
+
+        </div>
+
+
+        <div id="jobsGrid" class="jobs-grid">
+
+            <p class="loading">
+                Loading jobs...
+            </p>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+async function loadJobs() {
+
+    const container =
+        document.getElementById("jobsGrid");
+
+    try {
+
+        const response =
+            await fetch("/api/jobs");
+
+        if (!response.ok) {
+            throw new Error("Failed to load jobs");
+        }
+
+        const jobs =
+            await response.json();
+
+        if (!jobs.length) {
+
+            container.innerHTML = `
+                <p class="loading">
+                    No job openings available.
+                </p>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = jobs.map(job => {
+
+            const initial =
+                job.title
+                    ? job.title.charAt(0).toUpperCase()
+                    : "J";
+
+            return `
+                <div class="job-card">
+
+                    <div class="job-top">
+
+                        <div class="job-icon">
+                            ${initial}
+                        </div>
+
+                        <span class="job-status">
+                            ${job.status || "OPEN"}
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        ${job.title}
+                    </h3>
+
+                    <div class="job-location">
+                        📍 ${job.location || "Remote"}
+                    </div>
+
+                    <div class="job-description">
+                        ${job.description || "No description provided."}
+                    </div>
+
+                    <div class="job-meta">
+
+                        <span>
+                            ${job.experience || 0}+ years
+                        </span>
+
+                        <span>
+                            Job #${job.id}
+                        </span>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <p class="loading">
+                Unable to load jobs.
+            </p>
+        `;
+    }
+}
+
+loadJobs();
+
+</script>
+
+</body>
+
+</html>

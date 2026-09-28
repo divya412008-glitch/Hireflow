@@ -23,7 +23,9 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Application> getApplicationById(@PathVariable Long id) {
+    public ResponseEntity<Application> getApplicationById(
+            @PathVariable Long id) {
+
         return applicationService.getApplicationById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -32,6 +34,7 @@ public class ApplicationController {
     @PostMapping
     public ResponseEntity<Application> createApplication(
             @RequestBody Application application) {
+
         return ResponseEntity.ok(
                 applicationService.createApplication(application)
         );
@@ -41,13 +44,35 @@ public class ApplicationController {
     public ResponseEntity<Application> updateApplication(
             @PathVariable Long id,
             @RequestBody Application application) {
+
         return ResponseEntity.ok(
                 applicationService.updateApplication(id, application)
         );
     }
 
+    @PatchMapping("/{id}/stage")
+    public ResponseEntity<Application> moveToStage(
+            @PathVariable Long id,
+            @RequestParam String stage) {
+
+        return ResponseEntity.ok(
+                applicationService.moveToStage(id, stage)
+        );
+    }
+
+    @GetMapping("/funnel/{jobId}")
+    public ResponseEntity<?> getPipelineFunnel(
+            @PathVariable Long jobId) {
+
+        return ResponseEntity.ok(
+                applicationService.getPipelineFunnel(jobId)
+        );
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteApplication(
+            @PathVariable Long id) {
+
         applicationService.deleteApplication(id);
         return ResponseEntity.noContent().build();
     }

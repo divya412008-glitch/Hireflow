@@ -1,39 +1,1983 @@
-<nav>
+<!DOCTYPE html>
+<html lang="en">
 
-    <button
-        class="nav-item"
-        onclick="location.href='index.html'">
-        Dashboard
-    </button>
+<head>
 
-    <button
-        class="nav-item"
-        onclick="location.href='jobs.html'">
-        Jobs
-    </button>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <button
-        class="nav-item"
-        onclick="location.href='candidates.html'">
-        Candidates
-    </button>
+    <title>HireFlow | Interviews</title>
 
-    <button
-        class="nav-item"
-        onclick="location.href='applications.html'">
-        Applications
-    </button>
+    <link rel="stylesheet" href="style.css">
 
-    <button
-        class="nav-item active"
-        onclick="location.href='interviews.html'">
-        Interviews
-    </button>
+    <style>
 
-    <button
-        class="nav-item"
-        onclick="location.href='feedback.html'">
-        Feedback
-    </button>
+        .interview-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            padding: 34px 2px 22px;
+        }
 
-</nav>
+        .interview-eyebrow {
+            color: #a995ff;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+        }
+
+        .interview-page-header h1 {
+            margin-top: 5px;
+            font-size: 35px;
+            line-height: 1;
+            letter-spacing: -1.5px;
+        }
+
+        .interview-page-header h1 span {
+            color: #9f8dff;
+        }
+
+        .interview-page-header p {
+            margin-top: 9px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .interview-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .interview-action {
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .interview-action.primary {
+            color: white;
+            background: linear-gradient(135deg,#6048ef,#c044dd);
+        }
+
+        .interview-action.secondary {
+            color: #c5cedd;
+            border: 1px solid rgba(255,255,255,.07);
+            background: rgba(255,255,255,.03);
+        }
+
+        .interview-stats {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+
+        .interview-stat {
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.06);
+            background: linear-gradient(
+                145deg,
+                rgba(17,25,47,.90),
+                rgba(9,14,28,.84)
+            );
+        }
+
+        .interview-stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .interview-stat-icon {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            font-size: 11px;
+        }
+
+        .interview-stat-icon.purple {
+            color:#c9baff;
+            background:rgba(139,92,246,.10);
+        }
+
+        .interview-stat-icon.cyan {
+            color:#8ceeff;
+            background:rgba(34,211,238,.08);
+        }
+
+        .interview-stat-icon.pink {
+            color:#ff9ecb;
+            background:rgba(236,72,153,.08);
+        }
+
+        .interview-stat-icon.green {
+            color:#8ef3aa;
+            background:rgba(34,197,94,.08);
+        }
+
+        .interview-stat-value {
+            margin-top: 8px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .interview-stat-label {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        .interview-toolbar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 13px;
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,.055);
+            border-radius: 14px;
+            background: rgba(255,255,255,.025);
+        }
+
+        .interview-search {
+            flex: 1;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 10px;
+            border-radius: 9px;
+            background: rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .interview-search span {
+            color:#6f7c94;
+        }
+
+        .interview-search input {
+            width:100%;
+            border:none;
+            outline:none;
+            background:transparent;
+            color:white;
+            font-size:9px;
+        }
+
+        .interview-search input::placeholder {
+            color:#667188;
+        }
+
+        .interview-filter {
+            min-height:35px;
+            min-width:120px;
+            padding:0 9px;
+            border-radius:9px;
+            border:1px solid rgba(255,255,255,.05);
+            background:rgba(255,255,255,.025);
+            color:#aab4c6;
+            outline:none;
+            font-size:9px;
+        }
+
+        .interview-filter option {
+            color:white;
+            background:#10172b;
+        }
+
+        .interview-layout {
+            display:grid;
+            grid-template-columns:1.35fr .75fr;
+            gap:13px;
+        }
+
+        .interview-list-panel,
+        .schedule-panel {
+            padding:17px;
+        }
+
+        .interview-list {
+            display:flex;
+            flex-direction:column;
+            gap:9px;
+        }
+
+        .interview-card {
+            display:grid;
+            grid-template-columns:68px 1fr auto;
+            gap:12px;
+            align-items:center;
+            padding:13px;
+            border:1px solid rgba(255,255,255,.055);
+            border-radius:14px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(17,25,47,.86),
+                    rgba(8,13,27,.82)
+                );
+            transition:.2s ease;
+        }
+
+        .interview-card:hover {
+            transform:translateY(-2px);
+            border-color:rgba(139,92,246,.20);
+        }
+
+        .date-block {
+            padding:10px 7px;
+            border-radius:11px;
+            text-align:center;
+            background:rgba(139,92,246,.08);
+            border:1px solid rgba(139,92,246,.10);
+        }
+
+        .date-block .day {
+            display:block;
+            color:white;
+            font-size:18px;
+            font-weight:800;
+        }
+
+        .date-block .month {
+            display:block;
+            margin-top:2px;
+            color:#a8b2c5;
+            font-size:7px;
+            font-weight:700;
+        }
+
+        .interview-info h3 {
+            font-size:10px;
+        }
+
+        .interview-info p {
+            margin-top:4px;
+            color:#7f8aa1;
+            font-size:8px;
+        }
+
+        .interview-meta {
+            display:flex;
+            flex-wrap:wrap;
+            gap:5px;
+            margin-top:7px;
+        }
+
+        .interview-chip {
+            padding:5px 7px;
+            border-radius:6px;
+            color:#9da8bc;
+            background:rgba(255,255,255,.035);
+            font-size:6px;
+        }
+
+        .panel-row {
+            display:flex;
+            flex-wrap:wrap;
+            gap:5px;
+            margin-top:8px;
+        }
+
+        .panel-member {
+            padding:5px 7px;
+            border-radius:6px;
+            color:#bcaeff;
+            background:rgba(139,92,246,.08);
+            font-size:6px;
+            font-weight:700;
+        }
+
+        .interview-side {
+            display:flex;
+            flex-direction:column;
+            align-items:flex-end;
+            gap:8px;
+        }
+
+        .status-badge {
+            padding:6px 8px;
+            border-radius:7px;
+            font-size:7px;
+            font-weight:800;
+        }
+
+        .status-scheduled {
+            color:#8ef3aa;
+            background:rgba(34,197,94,.08);
+        }
+
+        .status-completed {
+            color:#90e5ff;
+            background:rgba(34,211,238,.08);
+        }
+
+        .status-cancelled {
+            color:#fca5a5;
+            background:rgba(239,68,68,.08);
+        }
+
+        .meeting-link {
+            padding:7px 8px;
+            border-radius:7px;
+            color:#c5b8ff;
+            background:rgba(139,92,246,.08);
+            font-size:7px;
+            font-weight:700;
+        }
+
+        .schedule-panel h2 {
+            font-size:16px;
+        }
+
+        .schedule-panel > p {
+            margin-top:5px;
+            color:var(--muted);
+            font-size:9px;
+            line-height:1.5;
+        }
+
+        .schedule-form {
+            margin-top:16px;
+        }
+
+        .form-row {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:8px;
+        }
+
+        .form-group {
+            margin-bottom:11px;
+        }
+
+        .form-group label {
+            display:block;
+            margin-bottom:6px;
+            color:#c1cadb;
+            font-size:8px;
+            font-weight:700;
+        }
+
+        .form-control {
+            width:100%;
+            min-height:34px;
+            padding:0 9px;
+            border-radius:9px;
+            border:1px solid rgba(255,255,255,.07);
+            background:rgba(255,255,255,.03);
+            color:white;
+            outline:none;
+            font-size:9px;
+        }
+
+        .form-control:focus {
+            border-color:rgba(139,92,246,.42);
+        }
+
+        .form-control option {
+            background:#10172b;
+            color:white;
+        }
+
+        .panel-picker {
+            padding:10px;
+            border-radius:10px;
+            border:1px solid rgba(255,255,255,.06);
+            background:rgba(255,255,255,.02);
+        }
+
+        .panel-picker-title {
+            margin-bottom:8px;
+            color:#aeb8c9;
+            font-size:8px;
+            font-weight:700;
+        }
+
+        .interviewer-grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:5px;
+        }
+
+        .interviewer-option {
+            display:flex;
+            align-items:center;
+            gap:6px;
+            padding:7px;
+            border-radius:8px;
+            background:rgba(255,255,255,.025);
+            color:#aab4c7;
+            font-size:7px;
+            cursor:pointer;
+        }
+
+        .interviewer-option input {
+            accent-color:#8b5cf6;
+        }
+
+        .schedule-message {
+            min-height:16px;
+            margin-bottom:7px;
+            font-size:8px;
+        }
+
+        .schedule-message.success {
+            color:var(--green);
+        }
+
+        .schedule-message.error {
+            color:#f87171;
+        }
+
+        .schedule-submit {
+            width:100%;
+            min-height:36px;
+            border-radius:9px;
+            border:none;
+            color:white;
+            background:linear-gradient(135deg,#6048ef,#c044dd);
+            font-size:9px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        .empty-state {
+            padding:60px 15px;
+            text-align:center;
+            color:#657086;
+            font-size:9px;
+            border:1px dashed rgba(255,255,255,.07);
+            border-radius:13px;
+        }
+
+        @media (max-width:1000px) {
+            .interview-stats {
+                grid-template-columns:repeat(2,1fr);
+            }
+
+            .interview-layout {
+                grid-template-columns:1fr;
+            }
+        }
+
+        @media (max-width:650px) {
+            .interview-page-header {
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .interview-toolbar {
+                flex-direction:column;
+                align-items:stretch;
+            }
+
+            .interview-card {
+                grid-template-columns:55px 1fr;
+            }
+
+            .interview-side {
+                grid-column:2;
+                align-items:flex-start;
+            }
+
+            .form-row {
+                grid-template-columns:1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">H</div>
+
+            <div>
+                <div class="brand-name">HireFlow</div>
+                <div class="brand-subtitle">
+                    Talent Command Center
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="workspace-label">
+            WORKSPACE
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link" href="index.html">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a class="nav-link" href="jobs.html">
+                <span class="nav-icon">▣</span>
+                <span>Jobs</span>
+            </a>
+
+            <a class="nav-link" href="candidates.html">
+                <span class="nav-icon">◉</span>
+                <span>Candidates</span>
+            </a>
+
+            <a class="nav-link" href="applications.html">
+                <span class="nav-icon">◫</span>
+                <span>Applications</span>
+            </a>
+
+            <a class="nav-link active" href="interviews.html">
+                <span class="nav-icon">◷</span>
+                <span>Interviews</span>
+            </a>
+
+            <a class="nav-link" href="feedback.html">
+                <span class="nav-icon">✦</span>
+                <span>Feedback</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-card">
+
+                <div class="profile-avatar">D</div>
+
+                <div class="profile-info">
+                    <strong>Recruiting Team</strong>
+                    <span>HireFlow Workspace</span>
+                </div>
+
+                <span class="profile-more">•••</span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                Workspace
+                <span>/</span>
+                <strong>Interviews</strong>
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search candidates, jobs...">
+
+                    <kbd>⌘ K</kbd>
+
+                </div>
+
+                <button class="icon-button">
+                    ♢
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button class="top-avatar">
+                    D
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="interview-page-header">
+
+            <div>
+
+                <div class="interview-eyebrow">
+                    INTERVIEW OPERATIONS
+                </div>
+
+                <h1>
+                    Interview
+                    <span>Command Center</span>
+                </h1>
+
+                <p>
+                    Schedule interviews, coordinate panels,
+                    and prevent interviewer availability conflicts.
+                </p>
+
+            </div>
+
+
+            <div class="interview-actions">
+
+                <a
+                    href="feedback.html"
+                    class="interview-action secondary">
+
+                    Review Feedback
+
+                </a>
+
+                <button
+                    id="focusSchedule"
+                    class="interview-action primary">
+
+                    + Schedule Interview
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="interview-stats">
+
+            <article class="interview-stat">
+
+                <div class="interview-stat-top">
+                    <span class="interview-stat-icon purple">
+                        ◷
+                    </span>
+                </div>
+
+                <div
+                    class="interview-stat-value"
+                    id="totalInterviews">
+                    0
+                </div>
+
+                <div class="interview-stat-label">
+                    Total Interviews
+                </div>
+
+            </article>
+
+
+            <article class="interview-stat">
+
+                <div class="interview-stat-top">
+                    <span class="interview-stat-icon cyan">
+                        ◎
+                    </span>
+                </div>
+
+                <div
+                    class="interview-stat-value"
+                    id="todayInterviews">
+                    0
+                </div>
+
+                <div class="interview-stat-label">
+                    Today
+                </div>
+
+            </article>
+
+
+            <article class="interview-stat">
+
+                <div class="interview-stat-top">
+                    <span class="interview-stat-icon pink">
+                        ✦
+                    </span>
+                </div>
+
+                <div
+                    class="interview-stat-value"
+                    id="panelInterviews">
+                    0
+                </div>
+
+                <div class="interview-stat-label">
+                    Panel Sessions
+                </div>
+
+            </article>
+
+
+            <article class="interview-stat">
+
+                <div class="interview-stat-top">
+                    <span class="interview-stat-icon green">
+                        ✓
+                    </span>
+                </div>
+
+                <div
+                    class="interview-stat-value"
+                    id="scheduledInterviews">
+                    0
+                </div>
+
+                <div class="interview-stat-label">
+                    Scheduled
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <section class="interview-toolbar">
+
+            <div class="interview-search">
+
+                <span>⌕</span>
+
+                <input
+                    id="interviewSearch"
+                    type="text"
+                    placeholder="Search candidate or job...">
+
+            </div>
+
+
+            <select
+                id="interviewStatus"
+                class="interview-filter">
+
+                <option value="ALL">
+                    All Status
+                </option>
+
+                <option value="SCHEDULED">
+                    Scheduled
+                </option>
+
+                <option value="COMPLETED">
+                    Completed
+                </option>
+
+                <option value="CANCELLED">
+                    Cancelled
+                </option>
+
+            </select>
+
+
+            <select
+                id="interviewTypeFilter"
+                class="interview-filter">
+
+                <option value="ALL">
+                    All Types
+                </option>
+
+                <option value="TECHNICAL">
+                    Technical
+                </option>
+
+                <option value="HR">
+                    HR
+                </option>
+
+                <option value="MANAGERIAL">
+                    Managerial
+                </option>
+
+            </select>
+
+
+            <button
+                id="refreshInterviews"
+                class="interview-action secondary">
+
+                ↻ Refresh
+
+            </button>
+
+        </section>
+
+
+        <section class="interview-layout">
+
+
+            <article class="panel interview-list-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            CALENDAR
+                        </span>
+
+                        <h2>
+                            Scheduled Sessions
+                        </h2>
+                    </div>
+
+                    <span
+                        class="panel-link"
+                        id="visibleCount">
+                        0
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="interviewList"
+                    class="interview-list">
+
+                    <div class="empty-state">
+                        Loading interviews...
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article
+                id="schedulePanel"
+                class="panel schedule-panel">
+
+                <span class="panel-kicker">
+                    NEW SESSION
+                </span>
+
+                <h2>
+                    Schedule Interview
+                </h2>
+
+                <p>
+                    Create a session and assign one or more
+                    interviewers to the panel.
+                </p>
+
+
+                <form
+                    id="scheduleForm"
+                    class="schedule-form">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Application
+                        </label>
+
+                        <select
+                            id="applicationId"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select application
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Start
+                            </label>
+
+                            <input
+                                id="startTime"
+                                type="datetime-local"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                End
+                            </label>
+
+                            <input
+                                id="endTime"
+                                type="datetime-local"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Interview Type
+                        </label>
+
+                        <select
+                            id="interviewType"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select type
+                            </option>
+
+                            <option value="TECHNICAL">
+                                Technical
+                            </option>
+
+                            <option value="HR">
+                                HR
+                            </option>
+
+                            <option value="MANAGERIAL">
+                                Managerial
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Meeting Link
+                        </label>
+
+                        <input
+                            id="meetingLink"
+                            type="url"
+                            class="form-control"
+                            placeholder="https://meet.google.com/...">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Interview Panel
+                        </label>
+
+
+                        <div class="panel-picker">
+
+                            <div class="panel-picker-title">
+                                Select one or more interviewers
+                            </div>
+
+
+                            <div
+                                id="interviewerGrid"
+                                class="interviewer-grid">
+
+                                Loading...
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="scheduleMessage"
+                        class="schedule-message">
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="schedule-submit">
+
+                        Schedule Interview
+
+                    </button>
+
+                </form>
+
+            </article>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+let interviews = [];
+let applications = [];
+let interviewers = [];
+let panelAssignments = [];
+
+
+async function getJson(
+    url,
+    options = {}
+) {
+
+    const response =
+        await fetch(
+            url,
+            options
+        );
+
+
+    if (!response.ok) {
+
+        let message =
+            `Request failed (${response.status})`;
+
+
+        try {
+
+            const error =
+                await response.json();
+
+            if (error.message) {
+                message =
+                    error.message;
+            }
+
+        } catch (_) {}
+
+
+        throw new Error(message);
+
+    }
+
+
+    return response.json();
+
+}
+
+
+async function loadData() {
+
+    try {
+
+        const [
+            interviewData,
+            applicationData,
+            interviewerData,
+            panelData
+        ] =
+            await Promise.all([
+                getJson("/api/interviews"),
+                getJson("/api/applications"),
+                getJson("/api/interviewers"),
+                getJson("/api/interview-panels")
+            ]);
+
+
+        interviews =
+            interviewData;
+
+        applications =
+            applicationData;
+
+        interviewers =
+            interviewerData;
+
+        panelAssignments =
+            panelData;
+
+
+        populateApplications();
+        renderInterviewers();
+        updateStats();
+        renderInterviews();
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "interviewList"
+        ).innerHTML = `
+            <div class="empty-state">
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+function populateApplications() {
+
+    const select =
+        document.getElementById(
+            "applicationId"
+        );
+
+
+    select.innerHTML =
+        `
+        <option value="">
+            Select application
+        </option>
+        `;
+
+
+    applications.forEach(
+        application => {
+
+            const candidate =
+                application
+                    .candidate
+                    ?.name
+                || "Candidate";
+
+
+            const job =
+                application
+                    .job
+                    ?.title
+                || "Job";
+
+
+            select.innerHTML += `
+                <option value="${application.id}">
+                    #${application.id}
+                    · ${escapeHtml(candidate)}
+                    · ${escapeHtml(job)}
+                </option>
+            `;
+
+        }
+    );
+
+}
+
+
+function renderInterviewers() {
+
+    const container =
+        document.getElementById(
+            "interviewerGrid"
+        );
+
+
+    if (!interviewers.length) {
+
+        container.innerHTML =
+            "No interviewers available.";
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        interviewers.map(
+            interviewer => `
+                <label
+                    class="interviewer-option">
+
+                    <input
+                        type="checkbox"
+                        value="${interviewer.id}">
+
+                    <span>
+                        ${escapeHtml(
+                            interviewer.name
+                        )}
+                        ·
+                        ${escapeHtml(
+                            interviewer.role
+                            || "Interviewer"
+                        )}
+                    </span>
+
+                </label>
+            `
+        ).join("");
+
+}
+
+
+function getPanelsForInterview(
+    interviewId
+) {
+
+    return panelAssignments.filter(
+        assignment =>
+            assignment.interview?.id ===
+            interviewId
+    );
+
+}
+
+
+function updateStats() {
+
+    const today =
+        new Date()
+            .toISOString()
+            .slice(0,10);
+
+
+    const todayCount =
+        interviews.filter(
+            interview =>
+                interview.startTime
+                    ?.startsWith(today)
+        ).length;
+
+
+    const scheduled =
+        interviews.filter(
+            interview =>
+                interview.status ===
+                "SCHEDULED"
+        ).length;
+
+
+    const panelCount =
+        interviews.filter(
+            interview =>
+                getPanelsForInterview(
+                    interview.id
+                ).length > 1
+        ).length;
+
+
+    document.getElementById(
+        "totalInterviews"
+    ).textContent =
+        interviews.length;
+
+
+    document.getElementById(
+        "todayInterviews"
+    ).textContent =
+        todayCount;
+
+
+    document.getElementById(
+        "panelInterviews"
+    ).textContent =
+        panelCount;
+
+
+    document.getElementById(
+        "scheduledInterviews"
+    ).textContent =
+        scheduled;
+
+}
+
+
+function getVisibleInterviews() {
+
+    const search =
+        document
+            .getElementById(
+                "interviewSearch"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const status =
+        document
+            .getElementById(
+                "interviewStatus"
+            )
+            .value;
+
+
+    const type =
+        document
+            .getElementById(
+                "interviewTypeFilter"
+            )
+            .value;
+
+
+    return interviews.filter(
+        interview => {
+
+            const candidate =
+                interview.application
+                    ?.candidate
+                    ?.name
+                || "";
+
+
+            const job =
+                interview.application
+                    ?.job
+                    ?.title
+                || "";
+
+
+            const searchable =
+                `${candidate} ${job}`
+                    .toLowerCase();
+
+
+            return (
+                (
+                    !search ||
+                    searchable.includes(search)
+                ) &&
+                (
+                    status === "ALL" ||
+                    interview.status === status
+                ) &&
+                (
+                    type === "ALL" ||
+                    interview.interviewType === type
+                )
+            );
+
+        }
+    );
+
+}
+
+
+function renderInterviews() {
+
+    const container =
+        document.getElementById(
+            "interviewList"
+        );
+
+
+    const visible =
+        getVisibleInterviews();
+
+
+    document.getElementById(
+        "visibleCount"
+    ).textContent =
+        visible.length;
+
+
+    if (!visible.length) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                No matching interviews.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        visible
+            .sort(
+                (a,b) =>
+                    new Date(a.startTime) -
+                    new Date(b.startTime)
+            )
+            .map(
+                interview =>
+                    createInterviewCard(
+                        interview
+                    )
+            )
+            .join("");
+
+}
+
+
+function createInterviewCard(
+    interview
+) {
+
+    const start =
+        new Date(
+            interview.startTime
+        );
+
+
+    const end =
+        new Date(
+            interview.endTime
+        );
+
+
+    const candidate =
+        interview.application
+            ?.candidate
+            ?.name
+        || "Candidate";
+
+
+    const job =
+        interview.application
+            ?.job
+            ?.title
+        || "Job";
+
+
+    const panels =
+        getPanelsForInterview(
+            interview.id
+        );
+
+
+    const statusClass =
+        (interview.status || "SCHEDULED")
+            .toLowerCase();
+
+
+    const day =
+        start.toLocaleDateString(
+            [],
+            { day:"2-digit" }
+        );
+
+
+    const month =
+        start.toLocaleDateString(
+            [],
+            { month:"short" }
+        );
+
+
+    return `
+
+        <article
+            class="interview-card">
+
+
+            <div class="date-block">
+
+                <span class="day">
+                    ${day}
+                </span>
+
+                <span class="month">
+                    ${month.toUpperCase()}
+                </span>
+
+            </div>
+
+
+            <div class="interview-info">
+
+                <h3>
+                    ${escapeHtml(candidate)}
+                </h3>
+
+                <p>
+                    ${escapeHtml(job)}
+                    ·
+                    ${formatTime(start)}
+                    -
+                    ${formatTime(end)}
+                </p>
+
+
+                <div class="interview-meta">
+
+                    <span class="interview-chip">
+                        ${escapeHtml(
+                            interview.interviewType
+                        )}
+                    </span>
+
+                    <span class="interview-chip">
+                        Interview #${interview.id}
+                    </span>
+
+                </div>
+
+
+                <div class="panel-row">
+
+                    ${
+                        panels.length
+                            ? panels.map(
+                                panel =>
+                                    `
+                                    <span
+                                        class="panel-member">
+
+                                        ${escapeHtml(
+                                            panel
+                                                .interviewer
+                                                ?.name
+                                            || "Interviewer"
+                                        )}
+
+                                    </span>
+                                    `
+                            ).join("")
+                            : `
+                                <span
+                                    class="panel-member">
+
+                                    No panel assigned
+
+                                </span>
+                              `
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="interview-side">
+
+                <span
+                    class="
+                        status-badge
+                        status-${statusClass}">
+
+                    ${escapeHtml(
+                        interview.status
+                        || "SCHEDULED"
+                    )}
+
+                </span>
+
+
+                ${
+                    interview.meetingLink
+                        ? `
+                            <a
+                                class="meeting-link"
+                                target="_blank"
+                                href="${escapeHtml(
+                                    interview.meetingLink
+                                )}">
+
+                                Join Meeting →
+
+                            </a>
+                          `
+                        : ""
+                }
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+function formatTime(
+    date
+) {
+
+    return date.toLocaleTimeString(
+        [],
+        {
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+function showScheduleMessage(
+    text,
+    error = false
+) {
+
+    const element =
+        document.getElementById(
+            "scheduleMessage"
+        );
+
+
+    element.textContent =
+        text;
+
+
+    element.className =
+        error
+            ? "schedule-message error"
+            : "schedule-message success";
+
+}
+
+
+async function rollbackInterview(
+    interviewId,
+    panelIds
+) {
+
+    for (const panelId of panelIds) {
+
+        try {
+
+            await fetch(
+                `/api/interview-panels/${panelId}`,
+                {
+                    method:"DELETE"
+                }
+            );
+
+        } catch (_) {}
+
+    }
+
+
+    try {
+
+        await fetch(
+            `/api/interviews/${interviewId}`,
+            {
+                method:"DELETE"
+            }
+        );
+
+    } catch (_) {}
+
+}
+
+
+document.getElementById(
+    "scheduleForm"
+)
+.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const applicationId =
+            Number(
+                document.getElementById(
+                    "applicationId"
+                ).value
+            );
+
+
+        const startTime =
+            document.getElementById(
+                "startTime"
+            ).value;
+
+
+        const endTime =
+            document.getElementById(
+                "endTime"
+            ).value;
+
+
+        const start =
+            new Date(startTime);
+
+
+        const end =
+            new Date(endTime);
+
+
+        if (!(end > start)) {
+
+            showScheduleMessage(
+                "End time must be after start time.",
+                true
+            );
+
+            return;
+
+        }
+
+
+        const selectedInterviewers =
+            [
+                ...document.querySelectorAll(
+                    "#interviewerGrid input:checked"
+                )
+            ]
+            .map(
+                checkbox =>
+                    Number(
+                        checkbox.value
+                    )
+            );
+
+
+        if (!selectedInterviewers.length) {
+
+            showScheduleMessage(
+                "Select at least one interviewer.",
+                true
+            );
+
+            return;
+
+        }
+
+
+        showScheduleMessage(
+            "Creating interview..."
+        );
+
+
+        let createdInterview = null;
+        const createdPanels = [];
+
+
+        try {
+
+            createdInterview =
+                await getJson(
+                    "/api/interviews",
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                application:{
+                                    id:
+                                        applicationId
+                                },
+
+                                startTime,
+
+                                endTime,
+
+                                interviewType:
+                                    document.getElementById(
+                                        "interviewType"
+                                    ).value,
+
+                                meetingLink:
+                                    document.getElementById(
+                                        "meetingLink"
+                                    ).value.trim(),
+
+                                status:
+                                    "SCHEDULED"
+
+                            })
+
+                    }
+                );
+
+
+            for (
+                const interviewerId
+                of selectedInterviewers
+            ) {
+
+                try {
+
+                    const panel =
+                        await getJson(
+                            "/api/interview-panels",
+                            {
+                                method:"POST",
+
+                                headers:{
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        interview:{
+                                            id:
+                                                createdInterview.id
+                                        },
+
+                                        interviewer:{
+                                            id:
+                                                interviewerId
+                                        },
+
+                                        panelRole:
+                                            "INTERVIEWER"
+
+                                    })
+
+                                }
+                        );
+
+
+                    createdPanels.push(
+                        panel.id
+                    );
+
+
+                } catch (panelError) {
+
+                    throw panelError;
+
+                }
+
+            }
+
+
+            showScheduleMessage(
+                "Interview and panel created successfully."
+            );
+
+
+            document.getElementById(
+                "scheduleForm"
+            ).reset();
+
+
+            await loadData();
+
+
+        } catch (error) {
+
+            if (createdInterview) {
+
+                await rollbackInterview(
+                    createdInterview.id,
+                    createdPanels
+                );
+
+            }
+
+
+            showScheduleMessage(
+                error.message,
+                true
+            );
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "focusSchedule"
+)
+.addEventListener(
+    "click",
+    () => {
+
+        document
+            .getElementById(
+                "schedulePanel"
+            )
+            .scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+
+    }
+);
+
+
+[
+    "interviewSearch",
+    "interviewStatus",
+    "interviewTypeFilter"
+]
+.forEach(
+    id => {
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "input",
+                renderInterviews
+            );
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "change",
+                renderInterviews
+            );
+
+    }
+);
+
+
+document.getElementById(
+    "refreshInterviews"
+)
+.addEventListener(
+    "click",
+    loadData
+);
+
+
+function escapeHtml(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /[&<>"']/g,
+        character =>
+            ({
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+            }[character])
+    );
+
+}
+
+
+loadData();
+
+</script>
+
+</body>
+
+</html>

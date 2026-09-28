@@ -1,39 +1,1896 @@
-<nav>
+<!DOCTYPE html>
+<html lang="en">
 
-    <button
-        class="nav-item"
-        onclick="location.href='index.html'">
-        Dashboard
-    </button>
+<head>
 
-    <button
-        class="nav-item"
-        onclick="location.href='jobs.html'">
-        Jobs
-    </button>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <button
-        class="nav-item"
-        onclick="location.href='candidates.html'">
-        Candidates
-    </button>
+    <title>HireFlow | Feedback</title>
 
-    <button
-        class="nav-item"
-        onclick="location.href='applications.html'">
-        Applications
-    </button>
+    <link rel="stylesheet" href="style.css">
 
-    <button
-        class="nav-item"
-        onclick="location.href='interviews.html'">
-        Interviews
-    </button>
+    <style>
 
-    <button
-        class="nav-item active"
-        onclick="location.href='feedback.html'">
-        Feedback
-    </button>
+        .feedback-page-header {
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            gap:20px;
+            padding:34px 2px 22px;
+        }
 
-</nav>
+        .feedback-eyebrow {
+            color:#a995ff;
+            font-size:9px;
+            font-weight:800;
+            letter-spacing:1.8px;
+        }
+
+        .feedback-page-header h1 {
+            margin-top:5px;
+            font-size:35px;
+            line-height:1;
+            letter-spacing:-1.5px;
+        }
+
+        .feedback-page-header h1 span {
+            color:#9f8dff;
+        }
+
+        .feedback-page-header p {
+            margin-top:9px;
+            color:var(--muted);
+            font-size:10px;
+            line-height:1.7;
+        }
+
+        .feedback-actions {
+            display:flex;
+            gap:8px;
+        }
+
+        .feedback-action {
+            padding:10px 14px;
+            border-radius:10px;
+            font-size:9px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        .feedback-action.primary {
+            color:white;
+            background:linear-gradient(135deg,#6048ef,#c044dd);
+        }
+
+        .feedback-action.secondary {
+            color:#c5cedd;
+            border:1px solid rgba(255,255,255,.07);
+            background:rgba(255,255,255,.03);
+        }
+
+        .feedback-stats {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:10px;
+            margin-bottom:13px;
+        }
+
+        .feedback-stat {
+            padding:14px;
+            border-radius:14px;
+            border:1px solid rgba(255,255,255,.06);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(17,25,47,.9),
+                    rgba(9,14,28,.84)
+                );
+        }
+
+        .feedback-stat-icon {
+            width:29px;
+            height:29px;
+            display:grid;
+            place-items:center;
+            border-radius:9px;
+        }
+
+        .feedback-stat-icon.purple {
+            color:#c9baff;
+            background:rgba(139,92,246,.10);
+        }
+
+        .feedback-stat-icon.green {
+            color:#8ef3aa;
+            background:rgba(34,197,94,.08);
+        }
+
+        .feedback-stat-icon.red {
+            color:#ff9eaa;
+            background:rgba(239,68,68,.08);
+        }
+
+        .feedback-stat-icon.yellow {
+            color:#ffe08a;
+            background:rgba(245,158,11,.08);
+        }
+
+        .feedback-stat-value {
+            margin-top:8px;
+            font-size:22px;
+            font-weight:800;
+        }
+
+        .feedback-stat-label {
+            margin-top:3px;
+            color:var(--muted);
+            font-size:8px;
+        }
+
+        .feedback-toolbar {
+            display:flex;
+            align-items:center;
+            gap:8px;
+            padding:10px;
+            margin-bottom:13px;
+            border:1px solid rgba(255,255,255,.055);
+            border-radius:14px;
+            background:rgba(255,255,255,.025);
+        }
+
+        .feedback-search {
+            flex:1;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            min-height:34px;
+            padding:0 10px;
+            border-radius:9px;
+            background:rgba(255,255,255,.025);
+            border:1px solid rgba(255,255,255,.05);
+        }
+
+        .feedback-search span {
+            color:#6f7b93;
+        }
+
+        .feedback-search input {
+            width:100%;
+            border:none;
+            outline:none;
+            background:transparent;
+            color:white;
+            font-size:9px;
+        }
+
+        .feedback-search input::placeholder {
+            color:#68748b;
+        }
+
+        .feedback-filter {
+            min-width:120px;
+            min-height:34px;
+            border-radius:9px;
+            padding:0 9px;
+            border:1px solid rgba(255,255,255,.05);
+            background:rgba(255,255,255,.025);
+            color:#aab4c6;
+            outline:none;
+            font-size:9px;
+        }
+
+        .feedback-filter option {
+            background:#10172b;
+            color:white;
+        }
+
+        .feedback-layout {
+            display:grid;
+            grid-template-columns:1.35fr .75fr;
+            gap:13px;
+        }
+
+        .feedback-list-panel,
+        .feedback-form-panel {
+            padding:17px;
+        }
+
+        .feedback-list {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:9px;
+        }
+
+        .feedback-card {
+            padding:13px;
+            border-radius:13px;
+            border:1px solid rgba(255,255,255,.055);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(17,25,47,.88),
+                    rgba(8,13,27,.82)
+                );
+            transition:.2s ease;
+        }
+
+        .feedback-card:hover {
+            transform:translateY(-2px);
+            border-color:rgba(139,92,246,.18);
+        }
+
+        .feedback-card-top {
+            display:flex;
+            justify-content:space-between;
+            gap:8px;
+        }
+
+        .feedback-person {
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .feedback-avatar {
+            width:32px;
+            height:32px;
+            display:grid;
+            place-items:center;
+            border-radius:9px;
+            color:white;
+            background:linear-gradient(135deg,#6366f1,#ec4899);
+            font-size:9px;
+            font-weight:800;
+        }
+
+        .feedback-person strong {
+            display:block;
+            color:#e7ecf5;
+            font-size:9px;
+        }
+
+        .feedback-person span {
+            display:block;
+            margin-top:3px;
+            color:#7d889d;
+            font-size:7px;
+        }
+
+        .recommendation {
+            align-self:flex-start;
+            padding:6px 8px;
+            border-radius:7px;
+            font-size:7px;
+            font-weight:800;
+        }
+
+        .recommendation.positive {
+            color:#8ef3aa;
+            background:rgba(34,197,94,.08);
+        }
+
+        .recommendation.negative {
+            color:#ff9fa9;
+            background:rgba(239,68,68,.08);
+        }
+
+        .rating {
+            margin-top:10px;
+            color:#ffd15c;
+            font-size:11px;
+            letter-spacing:2px;
+        }
+
+        .feedback-job {
+            margin-top:7px;
+            color:#97a2b6;
+            font-size:7px;
+        }
+
+        .feedback-comments {
+            margin-top:9px;
+            color:#abb4c5;
+            font-size:8px;
+            line-height:1.65;
+        }
+
+        .feedback-form-panel h2 {
+            font-size:16px;
+        }
+
+        .feedback-form-panel > p {
+            margin-top:5px;
+            color:var(--muted);
+            font-size:9px;
+            line-height:1.5;
+        }
+
+        .feedback-form {
+            margin-top:16px;
+        }
+
+        .form-group {
+            margin-bottom:11px;
+        }
+
+        .form-group label {
+            display:block;
+            margin-bottom:6px;
+            color:#c1cadb;
+            font-size:8px;
+            font-weight:700;
+        }
+
+        .form-control {
+            width:100%;
+            min-height:34px;
+            padding:0 9px;
+            border-radius:9px;
+            border:1px solid rgba(255,255,255,.07);
+            background:rgba(255,255,255,.03);
+            color:white;
+            outline:none;
+            font-size:9px;
+        }
+
+        textarea.form-control {
+            padding-top:9px;
+            resize:vertical;
+        }
+
+        .form-control:focus {
+            border-color:rgba(139,92,246,.42);
+        }
+
+        .form-control option {
+            background:#10172b;
+            color:white;
+        }
+
+        .rating-selector {
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            gap:5px;
+        }
+
+        .rating-button {
+            height:34px;
+            border-radius:8px;
+            border:1px solid rgba(255,255,255,.07);
+            background:rgba(255,255,255,.025);
+            color:#8d98ad;
+            cursor:pointer;
+            font-size:9px;
+            font-weight:800;
+        }
+
+        .rating-button.active {
+            color:white;
+            border-color:rgba(139,92,246,.32);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(96,72,239,.40),
+                    rgba(192,68,221,.28)
+                );
+        }
+
+        .readiness-card {
+            margin-top:12px;
+            padding:11px;
+            border-radius:11px;
+            border:1px solid rgba(34,197,94,.10);
+            background:rgba(34,197,94,.035);
+        }
+
+        .readiness-top {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .readiness-top strong {
+            font-size:9px;
+        }
+
+        .ready-badge {
+            padding:5px 7px;
+            border-radius:6px;
+            color:#8ef3aa;
+            background:rgba(34,197,94,.08);
+            font-size:7px;
+            font-weight:800;
+        }
+
+        .readiness-card p {
+            margin-top:5px;
+            color:#8290a6;
+            font-size:7px;
+            line-height:1.5;
+        }
+
+        .feedback-message {
+            min-height:16px;
+            margin-bottom:7px;
+            font-size:8px;
+        }
+
+        .feedback-message.success {
+            color:var(--green);
+        }
+
+        .feedback-message.error {
+            color:#f87171;
+        }
+
+        .feedback-submit {
+            width:100%;
+            min-height:36px;
+            border:none;
+            border-radius:9px;
+            color:white;
+            background:linear-gradient(135deg,#6048ef,#c044dd);
+            font-size:9px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        .empty-state {
+            grid-column:1/-1;
+            padding:55px 15px;
+            text-align:center;
+            color:#657086;
+            border:1px dashed rgba(255,255,255,.07);
+            border-radius:13px;
+            font-size:9px;
+        }
+
+        @media (max-width:1000px) {
+            .feedback-stats {
+                grid-template-columns:repeat(2,1fr);
+            }
+
+            .feedback-layout {
+                grid-template-columns:1fr;
+            }
+        }
+
+        @media (max-width:700px) {
+            .feedback-page-header {
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .feedback-toolbar {
+                flex-direction:column;
+                align-items:stretch;
+            }
+
+            .feedback-list {
+                grid-template-columns:1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                H
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    HireFlow
+                </div>
+
+                <div class="brand-subtitle">
+                    Talent Command Center
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="workspace-label">
+            WORKSPACE
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link" href="index.html">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a class="nav-link" href="jobs.html">
+                <span class="nav-icon">▣</span>
+                <span>Jobs</span>
+            </a>
+
+            <a class="nav-link" href="candidates.html">
+                <span class="nav-icon">◉</span>
+                <span>Candidates</span>
+            </a>
+
+            <a class="nav-link" href="applications.html">
+                <span class="nav-icon">◫</span>
+                <span>Applications</span>
+            </a>
+
+            <a class="nav-link" href="interviews.html">
+                <span class="nav-icon">◷</span>
+                <span>Interviews</span>
+            </a>
+
+            <a class="nav-link active" href="feedback.html">
+                <span class="nav-icon">✦</span>
+                <span>Feedback</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-card">
+
+                <div class="profile-avatar">
+                    D
+                </div>
+
+                <div class="profile-info">
+                    <strong>Recruiting Team</strong>
+                    <span>HireFlow Workspace</span>
+                </div>
+
+                <span class="profile-more">
+                    •••
+                </span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                Workspace
+                <span>/</span>
+                <strong>Feedback</strong>
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search candidates, jobs...">
+
+                    <kbd>⌘ K</kbd>
+
+                </div>
+
+                <button class="icon-button">
+                    ♢
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button class="top-avatar">
+                    D
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="feedback-page-header">
+
+            <div>
+
+                <div class="feedback-eyebrow">
+                    TALENT EVALUATION
+                </div>
+
+                <h1>
+                    Interview
+                    <span>Feedback</span>
+                </h1>
+
+                <p>
+                    Turn interviewer evaluations into clear,
+                    evidence-based hiring decisions.
+                </p>
+
+            </div>
+
+
+            <div class="feedback-actions">
+
+                <a
+                    href="applications.html"
+                    class="feedback-action secondary">
+
+                    Open Pipeline
+
+                </a>
+
+                <a
+                    href="interviews.html"
+                    class="feedback-action primary">
+
+                    View Interviews
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="feedback-stats">
+
+
+            <article class="feedback-stat">
+
+                <div class="feedback-stat-icon purple">
+                    ✦
+                </div>
+
+                <div
+                    id="totalFeedback"
+                    class="feedback-stat-value">
+                    0
+                </div>
+
+                <div class="feedback-stat-label">
+                    Total Reviews
+                </div>
+
+            </article>
+
+
+            <article class="feedback-stat">
+
+                <div class="feedback-stat-icon green">
+                    ✓
+                </div>
+
+                <div
+                    id="positiveFeedback"
+                    class="feedback-stat-value">
+                    0
+                </div>
+
+                <div class="feedback-stat-label">
+                    Positive
+                </div>
+
+            </article>
+
+
+            <article class="feedback-stat">
+
+                <div class="feedback-stat-icon red">
+                    ×
+                </div>
+
+                <div
+                    id="negativeFeedback"
+                    class="feedback-stat-value">
+                    0
+                </div>
+
+                <div class="feedback-stat-label">
+                    Negative
+                </div>
+
+            </article>
+
+
+            <article class="feedback-stat">
+
+                <div class="feedback-stat-icon yellow">
+                    ★
+                </div>
+
+                <div
+                    id="averageRating"
+                    class="feedback-stat-value">
+                    0.0
+                </div>
+
+                <div class="feedback-stat-label">
+                    Average Rating
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <section class="feedback-toolbar">
+
+            <div class="feedback-search">
+
+                <span>⌕</span>
+
+                <input
+                    id="feedbackSearch"
+                    type="text"
+                    placeholder="Search candidate, interviewer or comments...">
+
+            </div>
+
+
+            <select
+                id="recommendationFilter"
+                class="feedback-filter">
+
+                <option value="ALL">
+                    All Recommendations
+                </option>
+
+                <option value="POSITIVE">
+                    Positive
+                </option>
+
+                <option value="NEGATIVE">
+                    Negative
+                </option>
+
+            </select>
+
+
+            <select
+                id="ratingFilter"
+                class="feedback-filter">
+
+                <option value="ALL">
+                    All Ratings
+                </option>
+
+                <option value="5">
+                    5 Stars
+                </option>
+
+                <option value="4">
+                    4+ Stars
+                </option>
+
+                <option value="3">
+                    3+ Stars
+                </option>
+
+                <option value="2">
+                    2+ Stars
+                </option>
+
+            </select>
+
+
+            <button
+                id="refreshFeedback"
+                class="feedback-action secondary">
+
+                ↻ Refresh
+
+            </button>
+
+        </section>
+
+
+        <section class="feedback-layout">
+
+
+            <article class="panel feedback-list-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            EVALUATION HISTORY
+                        </span>
+
+                        <h2>
+                            Interview Reviews
+                        </h2>
+                    </div>
+
+                    <span
+                        id="visibleFeedback"
+                        class="panel-link">
+                        0
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="feedbackList"
+                    class="feedback-list">
+
+                    <div class="empty-state">
+                        Loading feedback...
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="panel feedback-form-panel">
+
+                <span class="panel-kicker">
+                    NEW EVALUATION
+                </span>
+
+                <h2>
+                    Submit Feedback
+                </h2>
+
+                <p>
+                    Capture structured interviewer feedback
+                    after a completed interview.
+                </p>
+
+
+                <form
+                    id="feedbackForm"
+                    class="feedback-form">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Interview
+                        </label>
+
+                        <select
+                            id="feedbackInterview"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select interview
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Interviewer
+                        </label>
+
+                        <select
+                            id="feedbackInterviewer"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select interviewer
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Rating
+                        </label>
+
+
+                        <div
+                            id="ratingSelector"
+                            class="rating-selector">
+
+                            <button
+                                type="button"
+                                class="rating-button"
+                                data-rating="1">
+
+                                1
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="rating-button"
+                                data-rating="2">
+
+                                2
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="rating-button"
+                                data-rating="3">
+
+                                3
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="rating-button"
+                                data-rating="4">
+
+                                4
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="rating-button"
+                                data-rating="5">
+
+                                5
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Recommendation
+                        </label>
+
+                        <select
+                            id="feedbackRecommendation"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select recommendation
+                            </option>
+
+                            <option value="POSITIVE">
+                                Positive — Recommend
+                            </option>
+
+                            <option value="NEGATIVE">
+                                Negative — Do not recommend
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Interview Comments
+                        </label>
+
+                        <textarea
+                            id="feedbackComments"
+                            class="form-control"
+                            rows="6"
+                            placeholder="Summarize strengths, concerns, technical skills, communication and overall assessment..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <div class="readiness-card">
+
+                        <div class="readiness-top">
+
+                            <strong>
+                                OFFER READINESS
+                            </strong>
+
+                            <span
+                                id="readyBadge"
+                                class="ready-badge">
+
+                                Waiting
+
+                            </span>
+
+                        </div>
+
+                        <p>
+                            A positive feedback record can make the
+                            application eligible to move into OFFER,
+                            according to the HireFlow hiring rule.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="feedbackMessage"
+                        class="feedback-message">
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="feedback-submit">
+
+                        Submit Evaluation
+
+                    </button>
+
+                </form>
+
+            </article>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+let feedback = [];
+let interviews = [];
+let interviewers = [];
+let selectedRating = 0;
+
+
+async function getJson(
+    url,
+    options = {}
+) {
+
+    const response =
+        await fetch(
+            url,
+            options
+        );
+
+
+    if (!response.ok) {
+
+        let message =
+            `Request failed (${response.status})`;
+
+
+        try {
+
+            const error =
+                await response.json();
+
+            if (error.message) {
+                message =
+                    error.message;
+            }
+
+        } catch (_) {}
+
+
+        throw new Error(message);
+
+    }
+
+
+    return response.json();
+
+}
+
+
+async function loadData() {
+
+    try {
+
+        const [
+            feedbackData,
+            interviewData,
+            interviewerData
+        ] =
+            await Promise.all([
+                getJson("/api/feedback"),
+                getJson("/api/interviews"),
+                getJson("/api/interviewers")
+            ]);
+
+
+        feedback =
+            feedbackData;
+
+        interviews =
+            interviewData;
+
+        interviewers =
+            interviewerData;
+
+
+        populateInterviews();
+        populateInterviewers();
+        updateStats();
+        renderFeedback();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "feedbackList"
+        ).innerHTML = `
+            <div class="empty-state">
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+function populateInterviews() {
+
+    const select =
+        document.getElementById(
+            "feedbackInterview"
+        );
+
+
+    select.innerHTML =
+        `
+        <option value="">
+            Select interview
+        </option>
+        `;
+
+
+    interviews.forEach(
+        interview => {
+
+            const candidate =
+                interview
+                    .application
+                    ?.candidate
+                    ?.name
+                || "Candidate";
+
+
+            const type =
+                interview
+                    .interviewType
+                || "Interview";
+
+
+            select.innerHTML += `
+                <option value="${interview.id}">
+                    #${interview.id}
+                    · ${escapeHtml(candidate)}
+                    · ${escapeHtml(type)}
+                </option>
+            `;
+
+        }
+    );
+
+}
+
+
+function populateInterviewers() {
+
+    const select =
+        document.getElementById(
+            "feedbackInterviewer"
+        );
+
+
+    select.innerHTML =
+        `
+        <option value="">
+            Select interviewer
+        </option>
+        `;
+
+
+    interviewers.forEach(
+        interviewer => {
+
+            select.innerHTML += `
+                <option value="${interviewer.id}">
+                    ${escapeHtml(
+                        interviewer.name
+                    )}
+                </option>
+            `;
+
+        }
+    );
+
+}
+
+
+function updateStats() {
+
+    const total =
+        feedback.length;
+
+
+    const positive =
+        feedback.filter(
+            item =>
+                item.recommendation ===
+                "POSITIVE"
+        ).length;
+
+
+    const negative =
+        feedback.filter(
+            item =>
+                item.recommendation ===
+                "NEGATIVE"
+        ).length;
+
+
+    const ratings =
+        feedback
+            .map(
+                item =>
+                    Number(item.rating)
+            )
+            .filter(
+                rating =>
+                    !Number.isNaN(rating)
+            );
+
+
+    const average =
+        ratings.length
+            ? (
+                ratings.reduce(
+                    (sum,rating) =>
+                        sum + rating,
+                    0
+                ) / ratings.length
+              ).toFixed(1)
+            : "0.0";
+
+
+    document.getElementById(
+        "totalFeedback"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "positiveFeedback"
+    ).textContent = positive;
+
+
+    document.getElementById(
+        "negativeFeedback"
+    ).textContent = negative;
+
+
+    document.getElementById(
+        "averageRating"
+    ).textContent = average;
+
+}
+
+
+function getFilteredFeedback() {
+
+    const search =
+        document
+            .getElementById(
+                "feedbackSearch"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const recommendation =
+        document
+            .getElementById(
+                "recommendationFilter"
+            )
+            .value;
+
+
+    const rating =
+        document
+            .getElementById(
+                "ratingFilter"
+            )
+            .value;
+
+
+    return feedback.filter(
+        item => {
+
+            const candidate =
+                item.interview
+                    ?.application
+                    ?.candidate
+                    ?.name
+                || "";
+
+
+            const interviewer =
+                item.interviewer
+                    ?.name
+                || "";
+
+
+            const comments =
+                item.comments
+                || "";
+
+
+            const searchable =
+                `${candidate} ${interviewer} ${comments}`
+                    .toLowerCase();
+
+
+            const matchesSearch =
+                !search ||
+                searchable.includes(
+                    search
+                );
+
+
+            const matchesRecommendation =
+                recommendation === "ALL" ||
+                item.recommendation ===
+                    recommendation;
+
+
+            const itemRating =
+                Number(item.rating)
+                || 0;
+
+
+            let matchesRating =
+                true;
+
+
+            if (rating !== "ALL") {
+
+                matchesRating =
+                    itemRating >=
+                    Number(rating);
+
+            }
+
+
+            return (
+                matchesSearch &&
+                matchesRecommendation &&
+                matchesRating
+            );
+
+        }
+    );
+
+}
+
+
+function renderFeedback() {
+
+    const container =
+        document.getElementById(
+            "feedbackList"
+        );
+
+
+    const visible =
+        getFilteredFeedback();
+
+
+    document.getElementById(
+        "visibleFeedback"
+    ).textContent =
+        visible.length;
+
+
+    if (!visible.length) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                No feedback matches the
+                current filters.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        visible.map(
+            createFeedbackCard
+        ).join("");
+
+}
+
+
+function createFeedbackCard(
+    item
+) {
+
+    const interviewer =
+        item.interviewer
+            ?.name
+        || "Interviewer";
+
+
+    const candidate =
+        item.interview
+            ?.application
+            ?.candidate
+            ?.name
+        || "Candidate";
+
+
+    const job =
+        item.interview
+            ?.application
+            ?.job
+            ?.title
+        || "Job";
+
+
+    const initial =
+        interviewer
+            .charAt(0)
+            .toUpperCase();
+
+
+    const rating =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Number(item.rating)
+                || 0
+            )
+        );
+
+
+    const stars =
+        "★".repeat(rating) +
+        "☆".repeat(5-rating);
+
+
+    const recommendation =
+        item.recommendation
+        || "UNKNOWN";
+
+
+    return `
+
+        <article
+            class="feedback-card">
+
+
+            <div
+                class="feedback-card-top">
+
+
+                <div
+                    class="feedback-person">
+
+
+                    <div
+                        class="feedback-avatar">
+
+                        ${escapeHtml(
+                            initial
+                        )}
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(
+                                interviewer
+                            )}
+                        </strong>
+
+                        <span>
+                            Review for
+                            ${escapeHtml(
+                                candidate
+                            )}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <span
+                    class="
+                        recommendation
+                        ${
+                            recommendation ===
+                            "POSITIVE"
+                                ? "positive"
+                                : "negative"
+                        }
+                    ">
+
+                    ${escapeHtml(
+                        recommendation
+                    )}
+
+                </span>
+
+            </div>
+
+
+            <div
+                class="rating">
+
+                ${stars}
+
+            </div>
+
+
+            <div
+                class="feedback-job">
+
+                ${escapeHtml(job)}
+                ·
+                Interview #${item.interview?.id || "-"}
+
+            </div>
+
+
+            <div
+                class="feedback-comments">
+
+                ${escapeHtml(
+                    item.comments
+                    || "No comments."
+                )}
+
+            </div>
+
+
+        </article>
+
+    `;
+
+}
+
+
+/* RATING SELECTION */
+
+document
+    .querySelectorAll(
+        ".rating-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    selectedRating =
+                        Number(
+                            button.dataset.rating
+                        );
+
+
+                    document
+                        .querySelectorAll(
+                            ".rating-button"
+                        )
+                        .forEach(
+                            item =>
+                                item.classList
+                                    .remove(
+                                        "active"
+                                    )
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* READINESS */
+
+document
+    .getElementById(
+        "feedbackRecommendation"
+    )
+    .addEventListener(
+        "change",
+        event => {
+
+            const badge =
+                document.getElementById(
+                    "readyBadge"
+                );
+
+
+            if (
+                event.target.value ===
+                "POSITIVE"
+            ) {
+
+                badge.textContent =
+                    "Offer Ready";
+
+            } else if (
+                event.target.value ===
+                "NEGATIVE"
+            ) {
+
+                badge.textContent =
+                    "Not Ready";
+
+            } else {
+
+                badge.textContent =
+                    "Waiting";
+
+            }
+
+        }
+    );
+
+
+/* SUBMIT */
+
+document
+    .getElementById(
+        "feedbackForm"
+    )
+    .addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const message =
+                document.getElementById(
+                    "feedbackMessage"
+                );
+
+
+            if (
+                selectedRating <
+                1
+            ) {
+
+                message.textContent =
+                    "Please select a rating.";
+
+                message.className =
+                    "feedback-message error";
+
+                return;
+
+            }
+
+
+            try {
+
+                await getJson(
+                    "/api/feedback",
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                interview:{
+                                    id:
+                                        Number(
+                                            document.getElementById(
+                                                "feedbackInterview"
+                                            ).value
+                                        )
+                                },
+
+                                interviewer:{
+                                    id:
+                                        Number(
+                                            document.getElementById(
+                                                "feedbackInterviewer"
+                                            ).value
+                                        )
+                                },
+
+                                rating:
+                                    selectedRating,
+
+                                comments:
+                                    document.getElementById(
+                                        "feedbackComments"
+                                    ).value
+                                    .trim(),
+
+                                recommendation:
+                                    document.getElementById(
+                                        "feedbackRecommendation"
+                                    ).value
+
+                            })
+
+                    }
+                );
+
+
+                message.textContent =
+                    "Evaluation submitted successfully.";
+
+                message.className =
+                    "feedback-message success";
+
+
+                document
+                    .getElementById(
+                        "feedbackForm"
+                    )
+                    .reset();
+
+
+                selectedRating = 0;
+
+
+                document
+                    .querySelectorAll(
+                        ".rating-button"
+                    )
+                    .forEach(
+                        button =>
+                            button.classList
+                                .remove(
+                                    "active"
+                                )
+                    );
+
+
+                document.getElementById(
+                    "readyBadge"
+                ).textContent =
+                    "Waiting";
+
+
+                await loadData();
+
+
+            } catch (error) {
+
+                message.textContent =
+                    error.message;
+
+                message.className =
+                    "feedback-message error";
+
+            }
+
+        }
+    );
+
+
+[
+    "feedbackSearch",
+    "recommendationFilter",
+    "ratingFilter"
+]
+.forEach(
+    id => {
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "input",
+                renderFeedback
+            );
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "change",
+                renderFeedback
+            );
+
+    }
+);
+
+
+document
+    .getElementById(
+        "refreshFeedback"
+    )
+    .addEventListener(
+        "click",
+        loadData
+    );
+
+
+function escapeHtml(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /[&<>"']/g,
+        character =>
+            ({
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+            }[character])
+    );
+
+}
+
+
+loadData();
+
+</script>
+
+</body>
+
+</html>

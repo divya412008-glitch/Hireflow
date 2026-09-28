@@ -2,459 +2,4361 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>HireFlow | Candidates</title>
 
     <link rel="stylesheet" href="style.css">
 
     <style>
-        .page-header {
+
+        :root {
+            --candidate-purple: #8b5cf6;
+            --candidate-pink: #ec4899;
+            --candidate-cyan: #22d3ee;
+            --candidate-green: #22c55e;
+            --candidate-red: #ef4444;
+        }
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .candidate-page-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            align-items: flex-end;
+            gap: 20px;
+
+            padding: 34px 2px 22px;
         }
 
-        .page-header h1 {
-            font-size: 30px;
-            font-weight: 800;
-        }
-
-        .page-header p {
-            margin-top: 6px;
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .candidate-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
-
-        .candidate-card {
-            position: relative;
-            overflow: hidden;
-
-            padding: 22px;
-            border-radius: 20px;
-
-            background: var(--card);
-            border: 1px solid var(--card-border);
-
-            backdrop-filter: blur(20px);
-
-            transition:
-                transform 0.25s ease,
-                border 0.25s ease;
-        }
-
-        .candidate-card::after {
-            content: "";
-
-            position: absolute;
-
-            width: 110px;
-            height: 110px;
-
-            right: -50px;
-            top: -50px;
-
-            border-radius: 50%;
-
-            background: rgba(139, 92, 246, 0.10);
-            filter: blur(10px);
-        }
-
-        .candidate-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(139, 92, 246, 0.30);
-        }
-
-        .candidate-top {
+        .candidate-heading {
             display: flex;
             align-items: center;
-            gap: 13px;
-
-            margin-bottom: 18px;
+            gap: 14px;
         }
 
-        .candidate-avatar {
+        .candidate-heading-icon {
             width: 52px;
             height: 52px;
 
             display: grid;
             place-items: center;
 
+            border-radius: 16px;
+
+            color: white;
+
+            font-size: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #c026d3
+                );
+
+            box-shadow:
+                0 14px 35px
+                rgba(99, 102, 241, 0.25);
+        }
+
+        .candidate-eyebrow {
+            color: #a995ff;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 1.8px;
+        }
+
+        .candidate-page-header h1 {
+            margin-top: 5px;
+
+            font-size: 35px;
+            line-height: 1;
+
+            letter-spacing: -1.5px;
+        }
+
+        .candidate-page-header p {
+            max-width: 650px;
+
+            margin-top: 9px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .candidate-header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .candidate-primary-btn,
+        .candidate-secondary-btn {
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .candidate-primary-btn {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6048ef,
+                    #c044dd
+                );
+
+            box-shadow:
+                0 10px 28px
+                rgba(99, 102, 241, 0.22);
+        }
+
+        .candidate-secondary-btn {
+            color: #c9d1e0;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+        }
+
+        .candidate-primary-btn:hover,
+        .candidate-secondary-btn:hover {
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           KPI CARDS
+        ===================================================== */
+
+        .candidate-metrics {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 13px;
+        }
+
+        .candidate-metric {
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 108px;
+
+            padding: 15px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.06);
+
             border-radius: 15px;
 
-            font-size: 18px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(17, 25, 47, 0.92),
+                    rgba(9, 14, 28, 0.84)
+                );
+
+            transition: 0.22s ease;
+        }
+
+        .candidate-metric:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(139, 92, 246, 0.22);
+        }
+
+        .candidate-metric-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .candidate-metric-icon {
+            width: 29px;
+            height: 29px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+        }
+
+        .candidate-metric-icon.purple {
+            color: #cdbfff;
+            background:
+                rgba(139, 92, 246, 0.10);
+        }
+
+        .candidate-metric-icon.cyan {
+            color: #91efff;
+            background:
+                rgba(34, 211, 238, 0.08);
+        }
+
+        .candidate-metric-icon.pink {
+            color: #ff9ccc;
+            background:
+                rgba(236, 72, 153, 0.08);
+        }
+
+        .candidate-metric-icon.green {
+            color: #91f5aa;
+            background:
+                rgba(34, 197, 94, 0.08);
+        }
+
+        .candidate-metric-growth {
+            color: var(--candidate-green);
+
+            font-size: 7px;
+            font-weight: 800;
+        }
+
+        .candidate-metric-value {
+            margin-top: 8px;
+
+            font-size: 24px;
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+        .candidate-metric-label {
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .candidate-toolbar {
+            display: grid;
+
+            grid-template-columns:
+                1.7fr
+                .75fr
+                .75fr
+                .75fr
+                .85fr
+                auto;
+
+            gap: 7px;
+
+            padding: 10px;
+
+            margin-bottom: 13px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.055);
+
+            border-radius: 14px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+        }
+
+        .candidate-search {
+            min-height: 35px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 0 10px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+        }
+
+        .candidate-search-icon {
+            color: #738098;
+        }
+
+        .candidate-search input {
+            width: 100%;
+
+            border: none;
+            outline: none;
+
+            color: white;
+
+            background: transparent;
+
+            font-size: 9px;
+        }
+
+        .candidate-search input::placeholder {
+            color: #68748b;
+        }
+
+        .candidate-filter {
+            min-height: 35px;
+
+            padding: 0 9px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            color: #aab4c6;
+
+            outline: none;
+
+            font-size: 8px;
+        }
+
+        .candidate-filter option {
+            color: white;
+            background: #10172b;
+        }
+
+        .view-toggle {
+            display: flex;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.06);
+
+            border-radius: 9px;
+        }
+
+        .view-toggle button {
+            width: 34px;
+            height: 35px;
+
+            color: #8490a8;
+
+            background:
+                rgba(255, 255, 255, 0.02);
+
+            cursor: pointer;
+        }
+
+        .view-toggle button.active {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(96, 72, 239, 0.5),
+                    rgba(192, 68, 221, 0.3)
+                );
+        }
+
+
+        /* =====================================================
+           CANDIDATE GRID
+        ===================================================== */
+
+        .candidate-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 11px;
+        }
+
+        .candidate-card {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 16px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.055);
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(16, 24, 47, 0.92),
+                    rgba(8, 13, 27, 0.85)
+                );
+
+            box-shadow:
+                0 20px 55px
+                rgba(0, 0, 0, 0.20);
+
+            transition:
+                transform 0.22s ease,
+                border-color 0.22s ease;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(139, 92, 246, 0.20);
+        }
+
+        .candidate-card-glow {
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            right: -60px;
+            top: -60px;
+
+            border-radius: 50%;
+
+            background:
+                var(--candidate-purple);
+
+            filter: blur(20px);
+
+            opacity: 0.09;
+
+            pointer-events: none;
+        }
+
+        .candidate-card-top {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: flex-start;
+
+            gap: 8px;
+        }
+
+        .candidate-identity {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .candidate-avatar {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            flex-shrink: 0;
+
+            color: white;
+
+            font-size: 13px;
             font-weight: 800;
 
             background:
                 linear-gradient(
                     135deg,
-                    var(--purple),
-                    var(--pink)
+                    #6366f1,
+                    #ec4899
                 );
-
-            box-shadow:
-                0 10px 30px rgba(139,92,246,0.22);
         }
 
-        .candidate-card h3 {
-            font-size: 15px;
-            margin-bottom: 5px;
+        .candidate-avatar.alt-one {
+            background:
+                linear-gradient(
+                    135deg,
+                    #06b6d4,
+                    #2563eb
+                );
         }
 
-        .candidate-email {
-            color: var(--muted);
-            font-size: 10px;
+        .candidate-avatar.alt-two {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ec4899,
+                    #9333ea
+                );
         }
 
-        .candidate-info {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-
-            margin-top: 15px;
+        .candidate-avatar.alt-three {
+            background:
+                linear-gradient(
+                    135deg,
+                    #14b8a6,
+                    #0891b2
+                );
         }
 
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-
-            padding: 9px 10px;
-
-            border-radius: 9px;
-
-            background: rgba(255,255,255,0.035);
+        .candidate-name {
+            font-size: 11px;
+            font-weight: 800;
         }
 
-        .info-row span:first-child {
-            color: var(--muted);
-            font-size: 10px;
+        .candidate-title {
+            margin-top: 3px;
+
+            color: #8994aa;
+
+            font-size: 7px;
         }
 
-        .info-row span:last-child {
-            color: #e3e8f4;
-            font-size: 10px;
-            font-weight: 600;
-            text-align: right;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-
-            margin-top: 15px;
-        }
-
-        .skill {
+        .candidate-status {
             padding: 6px 8px;
 
             border-radius: 7px;
 
-            color: var(--purple-light);
+            font-size: 7px;
+            font-weight: 800;
 
-            background: rgba(139,92,246,0.10);
+            white-space: nowrap;
+        }
 
-            font-size: 9px;
+        .candidate-status.applied,
+        .candidate-status.screening {
+            color: #7ddcff;
+            background:
+                rgba(34, 211, 238, 0.08);
+        }
+
+        .candidate-status.interview {
+            color: #db9eff;
+            background:
+                rgba(168, 85, 247, 0.10);
+        }
+
+        .candidate-status.offer {
+            color: #ff9ecb;
+            background:
+                rgba(236, 72, 153, 0.09);
+        }
+
+        .candidate-status.hired {
+            color: #85eeaa;
+            background:
+                rgba(34, 197, 94, 0.09);
+        }
+
+        .candidate-status.rejected {
+            color: #ff9ea7;
+            background:
+                rgba(239, 68, 68, 0.08);
+        }
+
+        .candidate-status.no_application {
+            color: #aeb8cb;
+            background:
+                rgba(255, 255, 255, 0.05);
+        }
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .candidate-contact {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 7px;
+
+            margin-top: 13px;
+        }
+
+        .candidate-contact-item {
+            overflow: hidden;
+
+            color: #8f9ab0;
+
+            font-size: 7px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .candidate-contact-item strong {
+            color: #d2d9e6;
+
             font-weight: 600;
         }
 
-        .candidate-actions {
-            display: flex;
-            gap: 8px;
+        .resume-link {
+            display: inline-flex;
 
-            margin-top: 17px;
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 9px;
+
+            color: #72e5f6;
+
+            font-size: 7px;
+            font-weight: 600;
+
+            text-decoration: none;
         }
 
-        .candidate-action {
-            flex: 1;
+        .experience-row {
+            display: flex;
 
-            padding: 9px;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 13px;
+        }
+
+        .experience-label {
+            color: #6f7a91;
+
+            font-size: 7px;
+        }
+
+        .experience-value {
+            color: #e1e6ef;
+
+            font-size: 7px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           SKILLS
+        ===================================================== */
+
+        .skills-row {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 5px;
+
+            margin-top: 9px;
+        }
+
+        .skill-pill {
+            padding: 5px 7px;
+
+            border-radius: 6px;
+
+            color: #9cc4ff;
+
+            background:
+                rgba(59, 130, 246, 0.08);
+
+            border:
+                1px solid
+                rgba(59, 130, 246, 0.10);
+
+            font-size: 6px;
+            font-weight: 700;
+        }
+
+        .skill-more {
+            color: #8792a9;
+
+            border-color:
+                rgba(255, 255, 255, 0.05);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+        }
+
+
+        /* =====================================================
+           CARD ACTIONS
+        ===================================================== */
+
+        .candidate-actions {
+            display: grid;
+
+            grid-template-columns:
+                1.1fr
+                1.2fr
+                32px;
+
+            gap: 5px;
+
+            margin-top: 13px;
+        }
+
+        .candidate-action-btn {
+            min-height: 31px;
+
+            padding: 0 7px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.06);
+
+            border-radius: 8px;
+
+            color: #bbc4d5;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            font-size: 7px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-align: center;
+
+            text-decoration: none;
+        }
+
+        .candidate-action-btn.primary {
+            color: white;
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6048ef,
+                    #9f43dd
+                );
+        }
+
+        .candidate-action-btn:hover {
+            border-color:
+                rgba(139, 92, 246, 0.22);
+        }
+
+        .candidate-stage-select {
+            width: 100%;
+
+            min-height: 31px;
+
+            padding: 0 6px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.06);
+
+            border-radius: 8px;
+
+            color: #c1c9d9;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            outline: none;
+
+            font-size: 7px;
+            font-weight: 700;
+        }
+
+        .candidate-stage-select option {
+            color: white;
+            background: #10172b;
+        }
+
+
+        /* =====================================================
+           ADD CANDIDATE / PROFILE MODAL
+        ===================================================== */
+
+        .candidate-modal {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(1, 4, 12, 0.78);
+
+            backdrop-filter: blur(14px);
+
+            z-index: 100;
+        }
+
+        .candidate-modal.show {
+            display: flex;
+        }
+
+        .candidate-modal-card {
+            width: min(560px, 100%);
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 24px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(20, 28, 51, 0.98),
+                    rgba(8, 13, 27, 0.98)
+                );
+
+            box-shadow:
+                0 40px 110px
+                rgba(0, 0, 0, 0.58);
+
+            animation:
+                modalIn
+                0.22s ease;
+        }
+
+        .profile-modal-card {
+            width: min(650px, 100%);
+        }
+
+        @keyframes modalIn {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(15px)
+                    scale(.97);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+        .candidate-modal-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 19px;
+        }
+
+        .profile-modal-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+        .profile-modal-title h2 {
+            margin-top: 5px;
+
+            font-size: 20px;
+        }
+
+        .profile-modal-title p {
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .candidate-close {
+            width: 32px;
+            height: 32px;
 
             border-radius: 9px;
 
-            border: 1px solid rgba(255,255,255,0.07);
+            color: #bdc6d7;
 
-            background: rgba(255,255,255,0.035);
-
-            color: #cbd3e3;
-
-            font-size: 10px;
-            font-weight: 600;
+            background:
+                rgba(255, 255, 255, 0.035);
 
             cursor: pointer;
         }
 
-        .candidate-action:hover {
-            background: rgba(139,92,246,0.10);
+        .candidate-close:hover {
             color: white;
+
+            background:
+                rgba(239, 68, 68, 0.10);
         }
 
-        @media (max-width: 1100px) {
-            .candidate-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+
+        /* =====================================================
+           PROFILE SUMMARY
+        ===================================================== */
+
+        .profile-summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 8px;
         }
 
-        @media (max-width: 700px) {
-            .candidate-grid {
-                grid-template-columns: 1fr;
-            }
+        .profile-summary-box {
+            padding: 11px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+
+            background:
+                rgba(255, 255, 255, 0.025);
         }
+
+        .profile-summary-box span {
+            display: block;
+
+            color: #68738a;
+
+            font-size: 7px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+        }
+
+        .profile-summary-box strong {
+            display: block;
+
+            margin-top: 5px;
+
+            overflow-wrap: anywhere;
+
+            color: #e6ebf4;
+
+            font-size: 9px;
+        }
+
+        .profile-section {
+            margin-top: 18px;
+        }
+
+        .profile-section-title {
+            margin-bottom: 8px;
+
+            color: #b7c1d3;
+
+            font-size: 8px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           JOURNEY
+        ===================================================== */
+
+        .profile-journey {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 6px;
+        }
+
+        .journey-step {
+            padding: 9px 5px;
+
+            border-radius: 9px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+
+            background:
+                rgba(255, 255, 255, 0.025);
+        }
+
+        .journey-step.completed {
+            border-color:
+                rgba(34, 197, 94, 0.14);
+
+            background:
+                rgba(34, 197, 94, 0.07);
+        }
+
+        .journey-step.current {
+            border-color:
+                rgba(139, 92, 246, 0.18);
+
+            background:
+                rgba(139, 92, 246, 0.10);
+        }
+
+        .journey-dot {
+            width: 19px;
+            height: 19px;
+
+            display: grid;
+            place-items: center;
+
+            margin:
+                0 auto
+                5px;
+
+            border-radius: 50%;
+
+            color: #7e899e;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            font-size: 7px;
+            font-weight: 800;
+        }
+
+        .journey-step.completed .journey-dot {
+            color: #8ef3aa;
+
+            background:
+                rgba(34, 197, 94, 0.16);
+        }
+
+        .journey-step.current .journey-dot {
+            color: #c9baff;
+
+            background:
+                rgba(139, 92, 246, 0.20);
+        }
+
+        .journey-step span {
+            color: #8f9aaf;
+
+            font-size: 6px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           PROFILE ACTIONS
+        ===================================================== */
+
+        .profile-modal-actions {
+            display: flex;
+
+            gap: 8px;
+
+            margin-top: 20px;
+        }
+
+        .profile-modal-actions .candidate-action-btn {
+            flex: 1;
+
+            display: grid;
+
+            place-items: center;
+        }
+
+
+        /* =====================================================
+           ADD CANDIDATE FORM
+        ===================================================== */
+
+        .candidate-form {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .candidate-form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .candidate-form-group label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #bec7d8;
+
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .candidate-form-group input {
+            width: 100%;
+
+            min-height: 35px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            border-radius: 9px;
+
+            color: white;
+
+            background:
+                rgba(255, 255, 255, 0.03);
+
+            outline: none;
+
+            font-size: 9px;
+        }
+
+        .candidate-form-group input:focus {
+            border-color:
+                rgba(139, 92, 246, 0.45);
+        }
+
+        .candidate-form-actions {
+            grid-column: 1 / -1;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 8px;
+
+            margin-top: 4px;
+        }
+
+        .modal-cancel,
+        .modal-submit {
+            min-height: 35px;
+
+            padding:
+                0 13px;
+
+            border-radius: 9px;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .modal-cancel {
+            color: #b9c2d2;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            background:
+                rgba(255, 255, 255, 0.025);
+        }
+
+        .modal-submit {
+            color: white;
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6048ef,
+                    #c044dd
+                );
+        }
+
+        .candidate-message {
+            grid-column: 1 / -1;
+
+            min-height: 16px;
+
+            font-size: 8px;
+        }
+
+        .candidate-message.success {
+            color: var(--candidate-green);
+        }
+
+        .candidate-message.error {
+            color: #f87171;
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .candidate-empty {
+            grid-column: 1 / -1;
+
+            padding: 65px 20px;
+
+            text-align: center;
+
+            color: #68738a;
+
+            border:
+                1px dashed
+                rgba(255, 255, 255, 0.07);
+
+            border-radius: 16px;
+
+            background:
+                rgba(255, 255, 255, 0.015);
+
+            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1180px) {
+
+            .candidate-toolbar {
+                grid-template-columns:
+                    1fr
+                    repeat(3, 1fr)
+                    auto;
+            }
+
+            .candidate-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .candidate-page-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .candidate-metrics {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .candidate-toolbar {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .candidate-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .candidate-metrics {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .candidate-toolbar {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .candidate-form {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .candidate-form-group.full {
+                grid-column: auto;
+            }
+
+            .candidate-form-actions {
+                grid-column: auto;
+            }
+
+            .candidate-message {
+                grid-column: auto;
+            }
+
+            .profile-summary-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .profile-journey {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .profile-modal-actions {
+                flex-direction: column;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
     <aside class="sidebar">
 
-        <div class="logo">
 
-            <div class="logo-icon">H</div>
+        <div class="brand">
+
+            <div class="brand-mark">
+                H
+            </div>
 
             <div>
-                <h2>HireFlow</h2>
-                <span>Applicant Tracking</span>
+
+                <div class="brand-name">
+                    HireFlow
+                </div>
+
+                <div class="brand-subtitle">
+                    Talent Command Center
+                </div>
+
             </div>
 
         </div>
 
-        <nav>
 
-            <button
-                class="nav-item"
-                onclick="location.href='index.html'">
-                Dashboard
-            </button>
+        <div class="workspace-label">
+            WORKSPACE
+        </div>
 
-            <button
-                class="nav-item"
-                onclick="location.href='jobs.html'">
-                Jobs
-            </button>
 
-            <button class="nav-item active">
-                Candidates
-            </button>
+        <nav class="sidebar-nav">
 
-            <button
-                class="nav-item"
-                onclick="alert('Applications page coming next')">
-                Applications
-            </button>
 
-            <button
-                class="nav-item"
-                onclick="alert('Interviews page coming next')">
-                Interviews
-            </button>
+            <a
+                class="nav-link"
+                href="index.html">
 
-            <button
-                class="nav-item"
-                onclick="alert('Feedback page coming next')">
-                Feedback
-            </button>
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                class="nav-link"
+                href="jobs.html">
+
+                <span class="nav-icon">
+                    ▣
+                </span>
+
+                <span>
+                    Jobs
+                </span>
+
+            </a>
+
+
+            <a
+                class="nav-link active"
+                href="candidates.html">
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Candidates
+                </span>
+
+            </a>
+
+
+            <a
+                class="nav-link"
+                href="applications.html">
+
+                <span class="nav-icon">
+                    ◫
+                </span>
+
+                <span>
+                    Applications
+                </span>
+
+            </a>
+
+
+            <a
+                class="nav-link"
+                href="interviews.html">
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Interviews
+                </span>
+
+            </a>
+
+
+            <a
+                class="nav-link"
+                href="feedback.html">
+
+                <span class="nav-icon">
+                    ✦
+                </span>
+
+                <span>
+                    Feedback
+                </span>
+
+            </a>
+
 
         </nav>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <div class="workspace-label">
+            INSIGHTS
+        </div>
+
+
+        <div class="mini-insight">
+
+            <div class="mini-insight-icon">
+                ↗
+            </div>
+
+            <div>
+
+                <strong
+                    id="sidebarCandidateCount">
+
+                    0
+
+                </strong>
+
+                <span>
+                    Active candidates
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-card">
+
+                <div class="profile-avatar">
+                    D
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Recruiting Team
+                    </strong>
+
+                    <span>
+                        HireFlow Workspace
+                    </span>
+
+                </div>
+
+                <span class="profile-more">
+                    •••
+                </span>
+
+            </div>
+
+        </div>
+
 
     </aside>
 
 
-    <main class="main-content">
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-        <div class="page-header">
+    <main class="main">
 
-            <div>
 
-                <h1>Candidates</h1>
+        <header class="topbar">
 
-                <p>
-                    Explore applicants and their professional profiles.
-                </p>
+
+            <div class="breadcrumb">
+
+                Workspace
+
+                <span>/</span>
+
+                <strong>
+                    Candidates
+                </strong>
 
             </div>
 
-        </div>
+
+            <div class="top-actions">
 
 
-        <div id="candidateGrid" class="candidate-grid">
+                <div class="search-box">
 
-            <p class="loading">
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        placeholder="Search candidates, jobs...">
+
+                    <kbd>
+                        ⌘ K
+                    </kbd>
+
+                </div>
+
+
+                <button class="icon-button">
+
+                    ♢
+
+                    <span
+                        class="notification-dot">
+                    </span>
+
+                </button>
+
+
+                <button class="top-avatar">
+                    D
+                </button>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <section class="candidate-page-header">
+
+
+            <div class="candidate-heading">
+
+
+                <div class="candidate-heading-icon">
+                    ◉
+                </div>
+
+
+                <div>
+
+                    <div class="candidate-eyebrow">
+                        TALENT INTELLIGENCE
+                    </div>
+
+
+                    <h1>
+                        Candidates
+                    </h1>
+
+
+                    <p>
+                        Discover and manage your talent pool.
+                        Track skills, applications and hiring status.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="candidate-header-actions">
+
+
+                <button
+                    class="candidate-secondary-btn"
+                    onclick="loadCandidates()">
+
+                    ↻ Refresh
+
+                </button>
+
+
+                <button
+                    id="openCandidateModal"
+                    class="candidate-primary-btn">
+
+                    + Add Candidate
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             METRICS
+        ================================================== -->
+
+        <section class="candidate-metrics">
+
+
+            <article class="candidate-metric">
+
+
+                <div class="candidate-metric-top">
+
+                    <div
+                        class="
+                            candidate-metric-icon
+                            purple
+                        ">
+
+                        ◉
+
+                    </div>
+
+
+                    <span
+                        class="candidate-metric-growth">
+
+                        ↗ Live
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="totalCandidates"
+                    class="candidate-metric-value">
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="candidate-metric-label">
+
+                    Total Candidates
+
+                </div>
+
+
+            </article>
+
+
+            <article class="candidate-metric">
+
+
+                <div class="candidate-metric-top">
+
+                    <div
+                        class="
+                            candidate-metric-icon
+                            cyan
+                        ">
+
+                        ◫
+
+                    </div>
+
+
+                    <span
+                        class="candidate-metric-growth">
+
+                        ↗ Active
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="appliedCandidates"
+                    class="candidate-metric-value">
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="candidate-metric-label">
+
+                    Applied
+
+                </div>
+
+
+            </article>
+
+
+            <article class="candidate-metric">
+
+
+                <div class="candidate-metric-top">
+
+                    <div
+                        class="
+                            candidate-metric-icon
+                            pink
+                        ">
+
+                        ◷
+
+                    </div>
+
+
+                    <span
+                        class="candidate-metric-growth">
+
+                        ↗ Pipeline
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="interviewCandidates"
+                    class="candidate-metric-value">
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="candidate-metric-label">
+
+                    In Interview
+
+                </div>
+
+
+            </article>
+
+
+            <article class="candidate-metric">
+
+
+                <div class="candidate-metric-top">
+
+                    <div
+                        class="
+                            candidate-metric-icon
+                            green
+                        ">
+
+                        ✓
+
+                    </div>
+
+
+                    <span
+                        class="candidate-metric-growth">
+
+                        ↗ Success
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="hiredCandidates"
+                    class="candidate-metric-value">
+
+                    0
+
+                </div>
+
+
+                <div
+                    class="candidate-metric-label">
+
+                    Hired
+
+                </div>
+
+
+            </article>
+
+
+        </section>
+
+
+        <!-- =================================================
+             TOOLBAR
+        ================================================== -->
+
+        <section class="candidate-toolbar">
+
+
+            <div class="candidate-search">
+
+
+                <span
+                    class="candidate-search-icon">
+
+                    ⌕
+
+                </span>
+
+
+                <input
+                    id="candidateSearch"
+                    type="text"
+                    placeholder="
+                        Search by name, email,
+                        skills, or phone...
+                    ">
+
+
+            </div>
+
+
+            <select
+                id="statusFilter"
+                class="candidate-filter">
+
+
+                <option value="ALL">
+                    All Status
+                </option>
+
+
+                <option value="APPLIED">
+                    Applied
+                </option>
+
+
+                <option value="SCREENING">
+                    Screening
+                </option>
+
+
+                <option value="INTERVIEW">
+                    Interview
+                </option>
+
+
+                <option value="OFFER">
+                    Offer
+                </option>
+
+
+                <option value="HIRED">
+                    Hired
+                </option>
+
+
+                <option value="REJECTED">
+                    Rejected
+                </option>
+
+
+                <option value="NO_APPLICATION">
+                    No Application
+                </option>
+
+
+            </select>
+
+
+            <select
+                id="experienceFilter"
+                class="candidate-filter">
+
+
+                <option value="ALL">
+                    All Experience
+                </option>
+
+
+                <option value="0-1">
+                    0–1 years
+                </option>
+
+
+                <option value="2-3">
+                    2–3 years
+                </option>
+
+
+                <option value="4+">
+                    4+ years
+                </option>
+
+
+            </select>
+
+
+            <select
+                id="skillFilter"
+                class="candidate-filter">
+
+
+                <option value="ALL">
+                    All Skills
+                </option>
+
+
+            </select>
+
+
+            <select
+                id="sortFilter"
+                class="candidate-filter">
+
+
+                <option value="NEWEST">
+                    Sort: Newest
+                </option>
+
+
+                <option value="OLDEST">
+                    Sort: Oldest
+                </option>
+
+
+                <option value="NAME">
+                    Sort: Name A–Z
+                </option>
+
+
+                <option value="EXPERIENCE">
+                    Sort: Experience
+                </option>
+
+
+            </select>
+
+
+            <div class="view-toggle">
+
+
+                <button
+                    class="active"
+                    title="Grid View">
+
+                    ▦
+
+                </button>
+
+
+                <button
+                    title="List View"
+                    onclick="alert('List view can be added next')">
+
+                    ☷
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             CANDIDATE GRID
+        ================================================== -->
+
+        <section
+            id="candidateGrid"
+            class="candidate-grid">
+
+
+            <div class="candidate-empty">
+
                 Loading candidates...
-            </p>
 
-        </div>
+            </div>
+
+
+        </section>
+
 
     </main>
+
+
+</div>
+
+
+<!-- ========================================================
+     ADD CANDIDATE MODAL
+========================================================= -->
+
+<div
+    id="candidateModal"
+    class="candidate-modal">
+
+
+    <div
+        class="candidate-modal-card">
+
+
+        <div class="candidate-modal-header">
+
+
+            <div>
+
+
+                <div class="candidate-eyebrow">
+                    TALENT PROFILE
+                </div>
+
+
+                <h2>
+                    Add Candidate
+                </h2>
+
+
+            </div>
+
+
+            <button
+                id="closeCandidateModal"
+                class="candidate-close">
+
+                ×
+
+            </button>
+
+
+        </div>
+
+
+        <form
+            id="candidateForm"
+            class="candidate-form">
+
+
+            <div class="candidate-form-group">
+
+
+                <label>
+                    Full Name
+                </label>
+
+
+                <input
+                    id="candidateName"
+                    type="text"
+                    placeholder="e.g. Rahul Sharma"
+                    required>
+
+
+            </div>
+
+
+            <div class="candidate-form-group">
+
+
+                <label>
+                    Email
+                </label>
+
+
+                <input
+                    id="candidateEmail"
+                    type="email"
+                    placeholder="rahul@example.com"
+                    required>
+
+
+            </div>
+
+
+            <div class="candidate-form-group">
+
+
+                <label>
+                    Phone
+                </label>
+
+
+                <input
+                    id="candidatePhone"
+                    type="text"
+                    placeholder="9876543210"
+                    required>
+
+
+            </div>
+
+
+            <div class="candidate-form-group">
+
+
+                <label>
+                    Experience
+                </label>
+
+
+                <input
+                    id="candidateExperience"
+                    type="number"
+                    min="0"
+                    placeholder="2"
+                    required>
+
+
+            </div>
+
+
+            <div
+                class="candidate-form-group full">
+
+
+                <label>
+                    Skills
+                </label>
+
+
+                <input
+                    id="candidateSkills"
+                    type="text"
+                    placeholder="
+                        Java, Spring Boot, MySQL
+                    "
+                    required>
+
+
+            </div>
+
+
+            <div
+                class="candidate-form-group full">
+
+
+                <label>
+                    Resume URL
+                </label>
+
+
+                <input
+                    id="candidateResume"
+                    type="text"
+                    placeholder="resume/candidate.pdf">
+
+
+            </div>
+
+
+            <div
+                id="candidateMessage"
+                class="candidate-message">
+            </div>
+
+
+            <div
+                class="candidate-form-actions">
+
+
+                <button
+                    type="button"
+                    id="cancelCandidate"
+                    class="modal-cancel">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="modal-submit">
+
+                    Create Candidate
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ========================================================
+     PROFILE MODAL
+========================================================= -->
+
+<div
+    id="profileModal"
+    class="candidate-modal">
+
+
+    <div
+        class="
+            candidate-modal-card
+            profile-modal-card
+        ">
+
+
+        <div
+            class="candidate-modal-header">
+
+
+            <div
+                class="profile-modal-title">
+
+
+                <div
+                    id="profileModalAvatar"
+                    class="candidate-avatar">
+
+                    D
+
+                </div>
+
+
+                <div>
+
+
+                    <div
+                        id="profileModalStage"
+                        class="
+                            candidate-status
+                            applied
+                        ">
+
+                        APPLIED
+
+                    </div>
+
+
+                    <h2
+                        id="profileModalName">
+
+                        Candidate
+
+                    </h2>
+
+
+                    <p
+                        id="profileModalRole">
+
+                        Talent Profile
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                id="closeProfileModal"
+                class="candidate-close">
+
+                ×
+
+            </button>
+
+
+        </div>
+
+
+        <div
+            class="profile-summary-grid">
+
+
+            <div
+                class="profile-summary-box">
+
+
+                <span>
+                    Email
+                </span>
+
+
+                <strong
+                    id="profileModalEmail">
+
+                    -
+
+                </strong>
+
+
+            </div>
+
+
+            <div
+                class="profile-summary-box">
+
+
+                <span>
+                    Phone
+                </span>
+
+
+                <strong
+                    id="profileModalPhone">
+
+                    -
+
+                </strong>
+
+
+            </div>
+
+
+            <div
+                class="profile-summary-box">
+
+
+                <span>
+                    Experience
+                </span>
+
+
+                <strong
+                    id="profileModalExperience">
+
+                    -
+
+                </strong>
+
+
+            </div>
+
+
+            <div
+                class="profile-summary-box">
+
+
+                <span>
+                    Application
+                </span>
+
+
+                <strong
+                    id="profileModalApplication">
+
+                    -
+
+                </strong>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="profile-section">
+
+
+            <div
+                class="profile-section-title">
+
+                Skills
+
+            </div>
+
+
+            <div
+                id="profileModalSkills"
+                class="skills-row">
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="profile-section">
+
+
+            <div
+                class="profile-section-title">
+
+                Recruitment Journey
+
+            </div>
+
+
+            <div
+                id="profileJourney"
+                class="profile-journey">
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="profile-modal-actions">
+
+
+            <a
+                id="profileResumeLink"
+                href="#"
+                target="_blank"
+                class="
+                    candidate-action-btn
+                    primary
+                ">
+
+                Open Resume
+
+            </a>
+
+
+            <a
+                href="applications.html"
+                class="
+                    candidate-action-btn
+                ">
+
+                Open Pipeline
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
 
 </div>
 
 
 <script>
 
-async function loadCandidates() {
+/* =========================================================
+   DATA
+========================================================= */
 
-    const container =
-        document.getElementById("candidateGrid");
+let candidates = [];
+let applications = [];
+
+
+/* =========================================================
+   API
+========================================================= */
+
+async function getJson(url) {
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        let message =
+            `Request failed (${response.status})`;
+
+
+        try {
+
+            const error =
+                await response.json();
+
+            if (error.message) {
+                message =
+                    error.message;
+            }
+
+        } catch (_) {}
+
+
+        throw new Error(message);
+
+    }
+
+
+    return response.json();
+
+}
+
+
+/* =========================================================
+   LOAD
+========================================================= */
+
+async function loadCandidates() {
 
     try {
 
-        const response =
-            await fetch("/api/candidates");
-
-        if (!response.ok) {
-            throw new Error("Failed to load candidates");
-        }
-
-        const candidates =
-            await response.json();
-
-        if (!candidates.length) {
-
-            container.innerHTML = `
-                <p class="loading">
-                    No candidates available.
-                </p>
-            `;
-
-            return;
-        }
-
-        container.innerHTML = candidates.map(candidate => {
-
-            const initial =
-                candidate.name
-                    ? candidate.name.charAt(0).toUpperCase()
-                    : "?";
-
-            const skills =
-                candidate.skills
-                    ? candidate.skills
-                        .split(",")
-                        .map(skill => `
-                            <span class="skill">
-                                ${skill.trim()}
-                            </span>
-                        `)
-                        .join("")
-                    : `
-                        <span class="skill">
-                            No skills listed
-                        </span>
-                    `;
-
-            return `
-                <div class="candidate-card">
-
-                    <div class="candidate-top">
-
-                        <div class="candidate-avatar">
-                            ${initial}
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                ${candidate.name}
-                            </h3>
-
-                            <div class="candidate-email">
-                                ${candidate.email}
-                            </div>
-
-                        </div>
-
-                    </div>
+        const [
+            candidateData,
+            applicationData
+        ] =
+            await Promise.all([
+                getJson("/api/candidates"),
+                getJson("/api/applications")
+            ]);
 
 
-                    <div class="candidate-info">
-
-                        <div class="info-row">
-
-                            <span>Phone</span>
-
-                            <span>
-                                ${candidate.phone || "Not provided"}
-                            </span>
-
-                        </div>
+        candidates =
+            candidateData;
 
 
-                        <div class="info-row">
-
-                            <span>Experience</span>
-
-                            <span>
-                                ${candidate.experience || 0} years
-                            </span>
-
-                        </div>
+        applications =
+            applicationData;
 
 
-                        <div class="info-row">
+        updateMetrics();
 
-                            <span>Resume</span>
+        populateSkillFilter();
 
-                            <span>
-                                ${candidate.resumeUrl || "Not available"}
-                            </span>
+        renderCandidates();
 
-                        </div>
-
-                    </div>
-
-
-                    <div class="skills">
-                        ${skills}
-                    </div>
-
-
-                    <div class="candidate-actions">
-
-                        <button
-                            class="candidate-action"
-                            onclick="alert('Candidate profile selected')">
-                            View Profile
-                        </button>
-
-                        <button
-                            class="candidate-action"
-                            onclick="location.href='index.html'">
-                            Dashboard
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
 
     } catch (error) {
 
         console.error(error);
 
-        container.innerHTML = `
-            <p class="loading">
+
+        document.getElementById(
+            "candidateGrid"
+        ).innerHTML = `
+
+            <div class="candidate-empty">
+
                 Unable to load candidates.
-            </p>
+
+            </div>
+
         `;
+
     }
+
 }
+
+
+/* =========================================================
+   APPLICATIONS FOR CANDIDATE
+========================================================= */
+
+function getCandidateApplications(
+    candidateId
+) {
+
+    return applications.filter(
+        application =>
+            Number(
+                application.candidate?.id
+            ) ===
+            Number(candidateId)
+    );
+
+}
+
+
+/* =========================================================
+   CURRENT STAGE
+========================================================= */
+
+function getCandidateStage(
+    candidateId
+) {
+
+    const candidateApplications =
+        getCandidateApplications(
+            candidateId
+        );
+
+
+    if (!candidateApplications.length) {
+
+        return "NO_APPLICATION";
+
+    }
+
+
+    const stages =
+        candidateApplications
+            .map(
+                application =>
+                    application
+                        .pipelineStage
+                        ?.name
+            )
+            .filter(Boolean);
+
+
+    if (!stages.length) {
+
+        return "APPLIED";
+
+    }
+
+
+    const priority = [
+        "HIRED",
+        "OFFER",
+        "INTERVIEW",
+        "REJECTED",
+        "SCREENING"
+    ];
+
+
+    for (
+        const stage
+        of priority
+    ) {
+
+        if (
+            stages.includes(stage)
+        ) {
+
+            return stage;
+
+        }
+
+    }
+
+
+    return "APPLIED";
+
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+function updateMetrics() {
+
+    const total =
+        candidates.length;
+
+
+    const applied =
+        candidates.filter(
+            candidate =>
+                getCandidateStage(
+                    candidate.id
+                ) !==
+                "NO_APPLICATION"
+        ).length;
+
+
+    const interview =
+        candidates.filter(
+            candidate =>
+                getCandidateStage(
+                    candidate.id
+                ) ===
+                "INTERVIEW"
+        ).length;
+
+
+    const hired =
+        candidates.filter(
+            candidate =>
+                getCandidateStage(
+                    candidate.id
+                ) ===
+                "HIRED"
+        ).length;
+
+
+    document.getElementById(
+        "totalCandidates"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "appliedCandidates"
+    ).textContent =
+        applied;
+
+
+    document.getElementById(
+        "interviewCandidates"
+    ).textContent =
+        interview;
+
+
+    document.getElementById(
+        "hiredCandidates"
+    ).textContent =
+        hired;
+
+
+    document.getElementById(
+        "sidebarCandidateCount"
+    ).textContent =
+        total;
+
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+function populateSkillFilter() {
+
+    const skills =
+        new Set();
+
+
+    candidates.forEach(
+        candidate => {
+
+            if (!candidate.skills) {
+                return;
+            }
+
+
+            candidate.skills
+                .split(",")
+                .map(
+                    skill =>
+                        skill.trim()
+                )
+                .filter(Boolean)
+                .forEach(
+                    skill =>
+                        skills.add(skill)
+                );
+
+        }
+    );
+
+
+    const select =
+        document.getElementById(
+            "skillFilter"
+        );
+
+
+    select.innerHTML =
+        `
+        <option value="ALL">
+            All Skills
+        </option>
+        `
+        +
+        [...skills]
+            .sort()
+            .map(
+                skill =>
+                    `
+                    <option
+                        value="${escapeHtml(skill)}">
+
+                        ${escapeHtml(skill)}
+
+                    </option>
+                    `
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function getFilteredCandidates() {
+
+    const search =
+        document.getElementById(
+            "candidateSearch"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        )
+        .value;
+
+
+    const experience =
+        document.getElementById(
+            "experienceFilter"
+        )
+        .value;
+
+
+    const skill =
+        document.getElementById(
+            "skillFilter"
+        )
+        .value;
+
+
+    const sort =
+        document.getElementById(
+            "sortFilter"
+        )
+        .value;
+
+
+    let filtered =
+        candidates.filter(
+            candidate => {
+
+
+                const searchable =
+                    [
+                        candidate.name,
+                        candidate.email,
+                        candidate.phone,
+                        candidate.skills,
+                        candidate.resumeUrl
+                    ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    searchable.includes(
+                        search
+                    );
+
+
+                const stage =
+                    getCandidateStage(
+                        candidate.id
+                    );
+
+
+                const matchesStatus =
+                    status === "ALL" ||
+                    stage === status;
+
+
+                const years =
+                    Number(
+                        candidate.experience
+                    ) || 0;
+
+
+                let matchesExperience =
+                    true;
+
+
+                if (
+                    experience === "0-1"
+                ) {
+
+                    matchesExperience =
+                        years <= 1;
+
+                }
+
+
+                if (
+                    experience === "2-3"
+                ) {
+
+                    matchesExperience =
+                        years >= 2 &&
+                        years <= 3;
+
+                }
+
+
+                if (
+                    experience === "4+"
+                ) {
+
+                    matchesExperience =
+                        years >= 4;
+
+                }
+
+
+                const matchesSkill =
+                    skill === "ALL" ||
+                    (
+                        candidate.skills
+                        || ""
+                    )
+                    .toLowerCase()
+                    .includes(
+                        skill.toLowerCase()
+                    );
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus &&
+                    matchesExperience &&
+                    matchesSkill
+                );
+
+            }
+        );
+
+
+    filtered.sort(
+        (a, b) => {
+
+            if (
+                sort ===
+                "NAME"
+            ) {
+
+                return (
+                    a.name || ""
+                )
+                .localeCompare(
+                    b.name || ""
+                );
+
+            }
+
+
+            if (
+                sort ===
+                "EXPERIENCE"
+            ) {
+
+                return (
+                    Number(
+                        b.experience
+                    ) || 0
+                )
+                -
+                (
+                    Number(
+                        a.experience
+                    ) || 0
+                );
+
+            }
+
+
+            if (
+                sort ===
+                "OLDEST"
+            ) {
+
+                return (
+                    Number(a.id)
+                    -
+                    Number(b.id)
+                );
+
+            }
+
+
+            return (
+                Number(b.id)
+                -
+                Number(a.id)
+            );
+
+        }
+    );
+
+
+    return filtered;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderCandidates() {
+
+    const container =
+        document.getElementById(
+            "candidateGrid"
+        );
+
+
+    const filtered =
+        getFilteredCandidates();
+
+
+    if (!filtered.length) {
+
+        container.innerHTML = `
+
+            <div class="candidate-empty">
+
+                No candidates match
+                your current filters.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered
+            .map(
+                (
+                    candidate,
+                    index
+                ) =>
+                    createCandidateCard(
+                        candidate,
+                        index
+                    )
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+function createCandidateCard(
+    candidate,
+    index
+) {
+
+    const stage =
+        getCandidateStage(
+            candidate.id
+        );
+
+
+    const candidateApplications =
+        getCandidateApplications(
+            candidate.id
+        );
+
+
+    const currentApplication =
+        candidateApplications[0];
+
+
+    const initial =
+        candidate.name
+            ? candidate.name
+                .charAt(0)
+                .toUpperCase()
+            : "?";
+
+
+    const avatarClass =
+        `
+        candidate-avatar
+        ${
+            index % 4 === 1
+                ? "alt-one"
+                : index % 4 === 2
+                    ? "alt-two"
+                    : index % 4 === 3
+                        ? "alt-three"
+                        : ""
+        }
+        `;
+
+
+    const displayStage =
+        stage ===
+        "NO_APPLICATION"
+            ? "NEW"
+            : stage;
+
+
+    const skills =
+        (
+            candidate.skills
+            || ""
+        )
+        .split(",")
+        .map(
+            skill =>
+                skill.trim()
+        )
+        .filter(Boolean);
+
+
+    const visibleSkills =
+        skills.slice(
+            0,
+            4
+        );
+
+
+    const remaining =
+        Math.max(
+            skills.length - 4,
+            0
+        );
+
+
+    return `
+
+        <article
+            class="candidate-card">
+
+
+            <div
+                class="candidate-card-glow">
+            </div>
+
+
+            <div
+                class="candidate-card-top">
+
+
+                <div
+                    class="candidate-identity">
+
+
+                    <div
+                        class="${avatarClass}">
+
+                        ${escapeHtml(
+                            initial
+                        )}
+
+                    </div>
+
+
+                    <div>
+
+                        <div
+                            class="candidate-name">
+
+                            ${escapeHtml(
+                                candidate.name
+                                ||
+                                "Unnamed Candidate"
+                            )}
+
+                        </div>
+
+
+                        <div
+                            class="candidate-title">
+
+                            ${escapeHtml(
+                                currentApplication
+                                    ?.job
+                                    ?.title
+                                ||
+                                "Talent Profile"
+                            )}
+
+                            ·
+
+                            ${
+                                Number(
+                                    candidate.experience
+                                ) || 0
+                            }
+                            yrs
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <span
+                    class="
+                        candidate-status
+                        ${stage.toLowerCase()}
+                    ">
+
+                    ${escapeHtml(
+                        displayStage
+                    )}
+
+                </span>
+
+
+            </div>
+
+
+            <div
+                class="candidate-contact">
+
+
+                <div
+                    class="candidate-contact-item">
+
+                    ✉
+
+                    <strong>
+
+                        ${escapeHtml(
+                            candidate.email
+                            ||
+                            "No email"
+                        )}
+
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="candidate-contact-item">
+
+                    ☎
+
+                    <strong>
+
+                        ${escapeHtml(
+                            candidate.phone
+                            ||
+                            "No phone"
+                        )}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <a
+                class="resume-link"
+                href="#"
+                onclick="
+                    event.preventDefault();
+                    showCandidateProfile(
+                        ${candidate.id}
+                    );
+                ">
+
+                ▧
+
+                ${
+                    candidate.resumeUrl
+                        ? escapeHtml(
+                            candidate.resumeUrl
+                        )
+                        : "Resume not available"
+                }
+
+            </a>
+
+
+            <div
+                class="experience-row">
+
+
+                <span
+                    class="experience-label">
+
+                    EXPERIENCE
+
+                </span>
+
+
+                <span
+                    class="experience-value">
+
+                    ${
+                        Number(
+                            candidate.experience
+                        ) || 0
+                    }
+                    years
+
+                </span>
+
+
+            </div>
+
+
+            <div
+                class="skills-row">
+
+
+                ${
+                    visibleSkills
+                        .map(
+                            skill =>
+                                `
+                                <span
+                                    class="skill-pill">
+
+                                    ${escapeHtml(
+                                        skill
+                                    )}
+
+                                </span>
+                                `
+                        )
+                        .join("")
+                }
+
+
+                ${
+                    remaining > 0
+                        ? `
+                            <span
+                                class="
+                                    skill-pill
+                                    skill-more
+                                ">
+
+                                +${remaining}
+
+                            </span>
+                            `
+                        : ""
+                }
+
+
+                ${
+                    !skills.length
+                        ? `
+                            <span
+                                class="
+                                    skill-pill
+                                    skill-more
+                                ">
+
+                                No skills listed
+
+                            </span>
+                            `
+                        : ""
+                }
+
+
+            </div>
+
+
+            <div
+                class="candidate-actions">
+
+
+                <button
+                    class="
+                        candidate-action-btn
+                        primary
+                    "
+                    onclick="
+                        showCandidateProfile(
+                            ${candidate.id}
+                        );
+                    ">
+
+                    ◉ View Profile
+
+                </button>
+
+
+                ${
+                    currentApplication
+                        ? `
+
+                            <select
+                                class="
+                                    candidate-stage-select
+                                "
+                                data-application-id="
+                                    ${currentApplication.id}
+                                "
+                                data-current-stage="
+                                    ${stage}
+                                ">
+
+                                ${
+                                    [
+                                        "SCREENING",
+                                        "INTERVIEW",
+                                        "OFFER",
+                                        "HIRED",
+                                        "REJECTED"
+                                    ]
+                                    .map(
+                                        option =>
+                                            `
+                                            <option
+                                                value="${option}"
+                                                ${
+                                                    stage === option
+                                                        ? "selected"
+                                                        : ""
+                                                }>
+
+                                                Move:
+                                                ${option}
+
+                                            </option>
+                                            `
+                                    )
+                                    .join("")
+                                }
+
+                            </select>
+
+                        `
+                        : `
+
+                            <a
+                                href="applications.html"
+                                class="candidate-action-btn">
+
+                                Open Pipeline
+
+                            </a>
+
+                        `
+                }
+
+
+                <button
+                    class="candidate-action-btn"
+                    title="Open profile"
+                    onclick="
+                        showCandidateProfile(
+                            ${candidate.id}
+                        );
+                    ">
+
+                    •••
+
+                </button>
+
+
+            </div>
+
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+   STAGE MOVE
+========================================================= */
+
+async function moveCandidateStage(
+    applicationId,
+    newStage,
+    oldStage,
+    select
+) {
+
+    if (
+        newStage ===
+        oldStage
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/applications/${applicationId}/stage?stage=${newStage}`,
+                {
+                    method: "PATCH"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            let message =
+                `Unable to move application (${response.status})`;
+
+
+            try {
+
+                const error =
+                    await response.json();
+
+                if (error.message) {
+
+                    message =
+                        error.message;
+
+                }
+
+            } catch (_) {}
+
+
+            throw new Error(
+                message
+            );
+
+        }
+
+
+        await loadCandidates();
+
+
+    } catch (error) {
+
+        select.value =
+            oldStage;
+
+
+        showUiMessage(
+            error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE MODAL
+========================================================= */
+
+function showCandidateProfile(
+    candidateId
+) {
+
+    const candidate =
+        candidates.find(
+            item =>
+                Number(item.id) ===
+                Number(candidateId)
+        );
+
+
+    if (!candidate) {
+        return;
+    }
+
+
+    const stage =
+        getCandidateStage(
+            candidate.id
+        );
+
+
+    const candidateApplications =
+        getCandidateApplications(
+            candidate.id
+        );
+
+
+    const currentApplication =
+        candidateApplications[0];
+
+
+    document.getElementById(
+        "profileModalName"
+    ).textContent =
+        candidate.name ||
+        "Unnamed Candidate";
+
+
+    document.getElementById(
+        "profileModalRole"
+    ).textContent =
+        currentApplication
+            ?.job
+            ?.title
+        ||
+        "Talent Profile";
+
+
+    document.getElementById(
+        "profileModalEmail"
+    ).textContent =
+        candidate.email ||
+        "Not available";
+
+
+    document.getElementById(
+        "profileModalPhone"
+    ).textContent =
+        candidate.phone ||
+        "Not available";
+
+
+    document.getElementById(
+        "profileModalExperience"
+    ).textContent =
+        `${
+            Number(
+                candidate.experience
+            ) || 0
+        } years`;
+
+
+    document.getElementById(
+        "profileModalApplication"
+    ).textContent =
+        currentApplication
+            ? `Application #${currentApplication.id}`
+            : "No application";
+
+
+    document.getElementById(
+        "profileModalAvatar"
+    ).textContent =
+        candidate.name
+            ? candidate.name
+                .charAt(0)
+                .toUpperCase()
+            : "?";
+
+
+    const status =
+        document.getElementById(
+            "profileModalStage"
+        );
+
+
+    status.textContent =
+        stage ===
+        "NO_APPLICATION"
+            ? "NEW"
+            : stage;
+
+
+    status.className =
+        `
+        candidate-status
+        ${stage.toLowerCase()}
+        `;
+
+
+    const skillsContainer =
+        document.getElementById(
+            "profileModalSkills"
+        );
+
+
+    const skills =
+        (
+            candidate.skills
+            || ""
+        )
+        .split(",")
+        .map(
+            skill =>
+                skill.trim()
+        )
+        .filter(Boolean);
+
+
+    skillsContainer.innerHTML =
+        skills.length
+            ? skills
+                .map(
+                    skill =>
+                        `
+                        <span
+                            class="skill-pill">
+
+                            ${escapeHtml(
+                                skill
+                            )}
+
+                        </span>
+                        `
+                )
+                .join("")
+            :
+                `
+                <span
+                    class="
+                        skill-pill
+                        skill-more
+                    ">
+
+                    No skills listed
+
+                </span>
+                `;
+
+
+    const journeyStages = [
+        "SCREENING",
+        "INTERVIEW",
+        "OFFER",
+        "HIRED"
+    ];
+
+
+    const currentIndex =
+        journeyStages.indexOf(
+            stage
+        );
+
+
+    document.getElementById(
+        "profileJourney"
+    ).innerHTML =
+        journeyStages
+            .map(
+                (
+                    journeyStage,
+                    index
+                ) => {
+
+                    let className =
+                        "journey-step";
+
+
+                    if (
+                        currentIndex >= 0 &&
+                        index < currentIndex
+                    ) {
+
+                        className +=
+                            " completed";
+
+                    }
+
+
+                    if (
+                        journeyStage ===
+                        stage
+                    ) {
+
+                        className +=
+                            " current";
+
+                    }
+
+
+                    const stepContent =
+                        (
+                            currentIndex >= 0 &&
+                            index < currentIndex
+                        )
+                            ? "✓"
+                            : index + 1;
+
+
+                    return `
+
+                        <div
+                            class="${className}">
+
+                            <div
+                                class="journey-dot">
+
+                                ${stepContent}
+
+                            </div>
+
+                            <span>
+                                ${journeyStage}
+                            </span>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    const resumeLink =
+        document.getElementById(
+            "profileResumeLink"
+        );
+
+
+    if (
+        candidate.resumeUrl
+    ) {
+
+        resumeLink.href =
+            candidate.resumeUrl;
+
+        resumeLink.style.opacity =
+            "1";
+
+    } else {
+
+        resumeLink.href =
+            "#";
+
+        resumeLink.style.opacity =
+            "0.45";
+
+    }
+
+
+    document.getElementById(
+        "profileModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE PROFILE
+========================================================= */
+
+document.getElementById(
+    "closeProfileModal"
+)
+.addEventListener(
+    "click",
+    () => {
+
+        document.getElementById(
+            "profileModal"
+        ).classList.remove(
+            "show"
+        );
+
+    }
+);
+
+
+document.getElementById(
+    "profileModal"
+)
+.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target.id ===
+            "profileModal"
+        ) {
+
+            event.currentTarget
+                .classList
+                .remove(
+                    "show"
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ADD CANDIDATE MODAL
+========================================================= */
+
+const candidateModal =
+    document.getElementById(
+        "candidateModal"
+    );
+
+
+document.getElementById(
+    "openCandidateModal"
+)
+.addEventListener(
+    "click",
+    () => {
+
+        candidateModal
+            .classList
+            .add("show");
+
+        document.getElementById(
+            "candidateName"
+        ).focus();
+
+    }
+);
+
+
+function closeCandidateModal() {
+
+    candidateModal
+        .classList
+        .remove("show");
+
+
+    document.getElementById(
+        "candidateForm"
+    ).reset();
+
+
+    const message =
+        document.getElementById(
+            "candidateMessage"
+        );
+
+
+    message.textContent =
+        "";
+
+
+    message.className =
+        "candidate-message";
+
+}
+
+
+document.getElementById(
+    "closeCandidateModal"
+)
+.addEventListener(
+    "click",
+    closeCandidateModal
+);
+
+
+document.getElementById(
+    "cancelCandidate"
+)
+.addEventListener(
+    "click",
+    closeCandidateModal
+);
+
+
+candidateModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            candidateModal
+        ) {
+
+            closeCandidateModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CREATE CANDIDATE
+========================================================= */
+
+document.getElementById(
+    "candidateForm"
+)
+.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const message =
+            document.getElementById(
+                "candidateMessage"
+            );
+
+
+        message.textContent =
+            "Creating candidate...";
+
+
+        message.className =
+            "candidate-message";
+
+
+        const candidate = {
+
+            name:
+                document.getElementById(
+                    "candidateName"
+                ).value
+                .trim(),
+
+            email:
+                document.getElementById(
+                    "candidateEmail"
+                ).value
+                .trim(),
+
+            phone:
+                document.getElementById(
+                    "candidatePhone"
+                ).value
+                .trim(),
+
+            experience:
+                Number(
+                    document.getElementById(
+                        "candidateExperience"
+                    ).value
+                ),
+
+            skills:
+                document.getElementById(
+                    "candidateSkills"
+                ).value
+                .trim(),
+
+            resumeUrl:
+                document.getElementById(
+                    "candidateResume"
+                ).value
+                .trim()
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/candidates",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                candidate
+                            )
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                let messageText =
+                    `Unable to create candidate (${response.status})`;
+
+
+                try {
+
+                    const error =
+                        await response.json();
+
+                    if (error.message) {
+
+                        messageText =
+                            error.message;
+
+                    }
+
+                } catch (_) {}
+
+
+                throw new Error(
+                    messageText
+                );
+
+            }
+
+
+            message.textContent =
+                "Candidate created successfully.";
+
+
+            message.className =
+                "candidate-message success";
+
+
+            await loadCandidates();
+
+
+            setTimeout(
+                closeCandidateModal,
+                800
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            message.textContent =
+                error.message;
+
+
+            message.className =
+                "candidate-message error";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+[
+    "candidateSearch",
+    "statusFilter",
+    "experienceFilter",
+    "skillFilter",
+    "sortFilter"
+]
+.forEach(
+    id => {
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "input",
+                renderCandidates
+            );
+
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "change",
+                renderCandidates
+            );
+
+    }
+);
+
+
+/* =========================================================
+   UI MESSAGE
+========================================================= */
+
+function showUiMessage(
+    message,
+    isError
+) {
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.style.position =
+        "fixed";
+
+
+    element.style.right =
+        "22px";
+
+
+    element.style.bottom =
+        "22px";
+
+
+    element.style.zIndex =
+        "200";
+
+
+    element.style.padding =
+        "11px 15px";
+
+
+    element.style.borderRadius =
+        "10px";
+
+
+    element.style.fontSize =
+        "9px";
+
+
+    element.style.fontWeight =
+        "700";
+
+
+    element.style.color =
+        "white";
+
+
+    element.style.background =
+        isError
+            ? "rgba(127,29,29,.95)"
+            : "rgba(22,101,52,.95)";
+
+
+    element.style.border =
+        isError
+            ? "1px solid rgba(248,113,113,.25)"
+            : "1px solid rgba(74,222,128,.20)";
+
+
+    document.body.appendChild(
+        element
+    );
+
+
+    setTimeout(
+        () => {
+
+            element.remove();
+
+        },
+        3200
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /[&<>"']/g,
+        character =>
+            ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[character])
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
 
 loadCandidates();
 
 </script>
+
 
 </body>
 

@@ -1,39 +1,772 @@
-<nav>
+<!DOCTYPE html>
+<html lang="en">
 
-    <button
-        class="nav-item"
-        onclick="location.href='index.html'">
-        Dashboard
-    </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <button
-        class="nav-item active"
-        onclick="location.href='jobs.html'">
-        Jobs
-    </button>
+    <title>HireFlow | Jobs</title>
 
-    <button
-        class="nav-item"
-        onclick="location.href='candidates.html'">
-        Candidates
-    </button>
+    <link rel="stylesheet" href="style.css">
 
-    <button
-        class="nav-item"
-        onclick="location.href='applications.html'">
-        Applications
-    </button>
+    <style>
+        .jobs-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            padding: 34px 2px 24px;
+        }
 
-    <button
-        class="nav-item"
-        onclick="location.href='interviews.html'">
-        Interviews
-    </button>
+        .jobs-page-header h1 {
+            font-size: 38px;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+        }
 
-    <button
-        class="nav-item"
-        onclick="location.href='feedback.html'">
-        Feedback
-    </button>
+        .jobs-page-header h1 span {
+            color: #9e8bff;
+        }
 
-</nav>
+        .jobs-page-header p {
+            max-width: 650px;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .jobs-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .jobs-primary,
+        .jobs-secondary {
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .jobs-primary {
+            color: white;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+        }
+
+        .jobs-secondary {
+            color: #c8d0df;
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .job-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.055);
+            background: rgba(255,255,255,0.025);
+        }
+
+        .job-search {
+            flex: 1;
+            max-width: 420px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 11px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .job-search span {
+            color: var(--muted-2);
+        }
+
+        .job-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            font-size: 10px;
+        }
+
+        .job-search input::placeholder {
+            color: #677188;
+        }
+
+        .job-filters {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.055);
+            background: rgba(255,255,255,0.025);
+            color: #8e99ae;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            color: white;
+            background: rgba(139,92,246,0.13);
+            border-color: rgba(139,92,246,0.20);
+        }
+
+        .jobs-grid-premium {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 13px;
+        }
+
+        .job-card-premium {
+            position: relative;
+            overflow: hidden;
+            padding: 18px;
+            border-radius: 17px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18,25,46,0.88),
+                    rgba(10,14,28,0.84)
+                );
+            box-shadow: var(--shadow);
+            transition:
+                transform 0.22s ease,
+                border-color 0.22s ease;
+        }
+
+        .job-card-premium:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139,92,246,0.20);
+        }
+
+        .job-card-glow {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            right: -55px;
+            top: -55px;
+            border-radius: 50%;
+            background: var(--purple);
+            opacity: 0.08;
+            filter: blur(16px);
+        }
+
+        .job-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .job-brand {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: white;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .job-status {
+            padding: 6px 8px;
+            border-radius: 7px;
+            color: #8cf2aa;
+            background: rgba(34,197,94,0.08);
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .job-title {
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .job-meta-line {
+            display: flex;
+            gap: 9px;
+            margin-top: 7px;
+            flex-wrap: wrap;
+        }
+
+        .job-meta-pill {
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        .job-meta-pill strong {
+            color: #d1d7e4;
+        }
+
+        .job-description {
+            min-height: 42px;
+            margin-top: 12px;
+            color: #8f9ab0;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .job-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 15px;
+        }
+
+        .job-stat {
+            padding: 8px;
+            border-radius: 9px;
+            background: rgba(255,255,255,0.027);
+        }
+
+        .job-stat span {
+            display: block;
+            color: var(--muted-2);
+            font-size: 7px;
+        }
+
+        .job-stat strong {
+            display: block;
+            margin-top: 4px;
+            color: #eef1f8;
+            font-size: 11px;
+        }
+
+        .job-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .job-opened {
+            color: var(--muted-2);
+            font-size: 7px;
+        }
+
+        .view-job-btn {
+            padding: 8px 10px;
+            border-radius: 8px;
+            color: #c7bcff;
+            background: rgba(139,92,246,0.08);
+            font-size: 8px;
+            font-weight: 700;
+            border: 1px solid rgba(139,92,246,0.10);
+            cursor: pointer;
+        }
+
+        .jobs-empty {
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            text-align: center;
+            border: 1px dashed rgba(255,255,255,0.08);
+            border-radius: 17px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        @media (max-width: 1100px) {
+            .jobs-grid-premium {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .jobs-page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .job-search {
+                max-width: none;
+            }
+
+            .jobs-grid-premium {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">H</div>
+
+            <div>
+                <div class="brand-name">HireFlow</div>
+                <div class="brand-subtitle">Talent Command Center</div>
+            </div>
+        </div>
+
+        <div class="workspace-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link" href="index.html">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a class="nav-link active" href="jobs.html">
+                <span class="nav-icon">▣</span>
+                <span>Jobs</span>
+            </a>
+
+            <a class="nav-link" href="candidates.html">
+                <span class="nav-icon">◉</span>
+                <span>Candidates</span>
+            </a>
+
+            <a class="nav-link" href="applications.html">
+                <span class="nav-icon">◫</span>
+                <span>Applications</span>
+            </a>
+
+            <a class="nav-link" href="interviews.html">
+                <span class="nav-icon">◷</span>
+                <span>Interviews</span>
+            </a>
+
+            <a class="nav-link" href="feedback.html">
+                <span class="nav-icon">✦</span>
+                <span>Feedback</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-card">
+                <div class="profile-avatar">D</div>
+
+                <div class="profile-info">
+                    <strong>Recruiting Team</strong>
+                    <span>HireFlow Workspace</span>
+                </div>
+
+                <span class="profile-more">•••</span>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                Workspace
+                <span>/</span>
+                <strong>Jobs</strong>
+            </div>
+
+            <div class="top-actions">
+
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input
+                        type="text"
+                        placeholder="Search candidates, jobs..."
+                    >
+                    <kbd>⌘ K</kbd>
+                </div>
+
+                <button class="icon-button">
+                    ♢
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button class="top-avatar">
+                    D
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="jobs-page-header">
+
+            <div>
+
+                <div class="eyebrow">
+                    TALENT ACQUISITION
+                </div>
+
+                <h1>
+                    Open <span>Positions</span>
+                </h1>
+
+                <p>
+                    Manage active opportunities, monitor applicant volume,
+                    and keep your hiring pipeline moving.
+                </p>
+
+            </div>
+
+            <div class="jobs-actions">
+
+                <a
+                    href="index.html"
+                    class="jobs-secondary">
+                    Dashboard
+                </a>
+
+                <a
+                    href="index.html"
+                    class="jobs-primary">
+                    + Create Job
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="job-controls">
+
+            <div class="job-search">
+
+                <span>⌕</span>
+
+                <input
+                    id="jobSearch"
+                    type="text"
+                    placeholder="Search by title or location..."
+                >
+
+            </div>
+
+
+            <div class="job-filters">
+
+                <button
+                    class="filter-btn active"
+                    data-status="ALL">
+                    All
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-status="OPEN">
+                    Open
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-status="CLOSED">
+                    Closed
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section
+            id="jobsGrid"
+            class="jobs-grid-premium">
+
+            <div class="jobs-empty">
+                Loading positions...
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+let allJobs = [];
+let allApplications = [];
+
+async function loadData() {
+
+    const jobsResponse =
+        await fetch("/api/jobs");
+
+    const applicationsResponse =
+        await fetch("/api/applications");
+
+    if (!jobsResponse.ok || !applicationsResponse.ok) {
+        throw new Error("Unable to load recruitment data.");
+    }
+
+    allJobs = await jobsResponse.json();
+    allApplications = await applicationsResponse.json();
+
+    renderJobs();
+
+}
+
+
+function renderJobs() {
+
+    const searchValue =
+        document.getElementById("jobSearch")
+            .value
+            .trim()
+            .toLowerCase();
+
+    const activeFilter =
+        document.querySelector(
+            ".filter-btn.active"
+        ).dataset.status;
+
+
+    const jobs =
+        allJobs.filter(job => {
+
+            const matchesSearch =
+                !searchValue ||
+                (job.title || "")
+                    .toLowerCase()
+                    .includes(searchValue) ||
+                (job.location || "")
+                    .toLowerCase()
+                    .includes(searchValue);
+
+            const matchesStatus =
+                activeFilter === "ALL" ||
+                (job.status || "OPEN") === activeFilter;
+
+            return matchesSearch && matchesStatus;
+
+        });
+
+
+    const grid =
+        document.getElementById("jobsGrid");
+
+
+    if (!jobs.length) {
+
+        grid.innerHTML = `
+            <div class="jobs-empty">
+                No matching job openings found.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    grid.innerHTML =
+        jobs.map(job => {
+
+            const applications =
+                allApplications.filter(
+                    application =>
+                        application.job?.id === job.id
+                );
+
+
+            const interviewCount =
+                applications.filter(
+                    application =>
+                        application.pipelineStage?.name === "INTERVIEW"
+                ).length;
+
+
+            const hiredCount =
+                applications.filter(
+                    application =>
+                        application.pipelineStage?.name === "HIRED"
+                ).length;
+
+
+            const initial =
+                job.title
+                    ? job.title
+                        .charAt(0)
+                        .toUpperCase()
+                    : "J";
+
+
+            return `
+
+                <article
+                    class="job-card-premium">
+
+                    <div class="job-card-glow"></div>
+
+
+                    <div class="job-card-top">
+
+                        <div class="job-brand">
+                            ${initial}
+                        </div>
+
+                        <span class="job-status">
+                            ${job.status || "OPEN"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="job-title">
+                        ${job.title}
+                    </div>
+
+
+                    <div class="job-meta-line">
+
+                        <div class="job-meta-pill">
+                            📍
+                            <strong>
+                                ${job.location || "Remote"}
+                            </strong>
+                        </div>
+
+                        <div class="job-meta-pill">
+                            ◷
+                            <strong>
+                                ${job.experience || 0}+ yrs
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="job-description">
+
+                        ${job.description
+                            || "No description provided."}
+
+                    </div>
+
+
+                    <div class="job-stats">
+
+                        <div class="job-stat">
+                            <span>APPLICATIONS</span>
+                            <strong>
+                                ${applications.length}
+                            </strong>
+                        </div>
+
+                        <div class="job-stat">
+                            <span>INTERVIEWS</span>
+                            <strong>
+                                ${interviewCount}
+                            </strong>
+                        </div>
+
+                        <div class="job-stat">
+                            <span>HIRED</span>
+                            <strong>
+                                ${hiredCount}
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="job-card-bottom">
+
+                        <span class="job-opened">
+                            JOB #${job.id}
+                        </span>
+
+                        <button
+                            class="view-job-btn"
+                            onclick="
+                                location.href='applications.html'
+                            ">
+                            View Pipeline →
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+}
+
+
+document.getElementById("jobSearch")
+    .addEventListener(
+        "input",
+        renderJobs
+    );
+
+
+document.querySelectorAll(".filter-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".filter-btn")
+                    .forEach(btn =>
+                        btn.classList.remove("active")
+                    );
+
+                button.classList.add("active");
+
+                renderJobs();
+
+            }
+        );
+
+    });
+
+
+loadData()
+    .catch(error => {
+
+        console.error(error);
+
+        document.getElementById("jobsGrid")
+            .innerHTML = `
+                <div class="jobs-empty">
+                    Unable to load jobs.
+                </div>
+            `;
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,39 +1,665 @@
-<nav>
+<!DOCTYPE html>
+<html lang="en">
 
-    <button
-        class="nav-item active"
-        onclick="location.href='index.html'">
-        Dashboard
-    </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <button
-        class="nav-item"
-        onclick="location.href='jobs.html'">
-        Jobs
-    </button>
+    <title>HireFlow | Command Center</title>
 
-    <button
-        class="nav-item"
-        onclick="location.href='candidates.html'">
-        Candidates
-    </button>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    <button
-        class="nav-item"
-        onclick="location.href='applications.html'">
-        Applications
-    </button>
+<body>
 
-    <button
-        class="nav-item"
-        onclick="location.href='interviews.html'">
-        Interviews
-    </button>
+<div class="page-glow glow-one"></div>
+<div class="page-glow glow-two"></div>
 
-    <button
-        class="nav-item"
-        onclick="location.href='feedback.html'">
-        Feedback
-    </button>
+<div class="app">
 
-</nav>
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                H
+            </div>
+
+            <div>
+                <div class="brand-name">HireFlow</div>
+                <div class="brand-subtitle">Talent Command Center</div>
+            </div>
+
+        </div>
+
+
+        <div class="workspace-label">
+            WORKSPACE
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link active" href="index.html">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a class="nav-link" href="jobs.html">
+                <span class="nav-icon">▣</span>
+                <span>Jobs</span>
+            </a>
+
+            <a class="nav-link" href="candidates.html">
+                <span class="nav-icon">◉</span>
+                <span>Candidates</span>
+            </a>
+
+            <a class="nav-link" href="applications.html">
+                <span class="nav-icon">◫</span>
+                <span>Applications</span>
+            </a>
+
+            <a class="nav-link" href="interviews.html">
+                <span class="nav-icon">◷</span>
+                <span>Interviews</span>
+            </a>
+
+            <a class="nav-link" href="feedback.html">
+                <span class="nav-icon">✦</span>
+                <span>Feedback</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <div class="workspace-label">
+            INSIGHTS
+        </div>
+
+
+        <div class="mini-insight">
+
+            <div class="mini-insight-icon">
+                ↗
+            </div>
+
+            <div>
+                <strong id="sidebarHiringCount">0</strong>
+                <span>Active applications</span>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-card">
+
+                <div class="profile-avatar">
+                    D
+                </div>
+
+                <div class="profile-info">
+                    <strong>Recruiting Team</strong>
+                    <span>HireFlow Workspace</span>
+                </div>
+
+                <span class="profile-more">•••</span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                Workspace
+                <span>/</span>
+                <strong>Command Center</strong>
+            </div>
+
+            <div class="top-actions">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search candidates, jobs..."
+                    >
+
+                    <kbd>⌘ K</kbd>
+
+                </div>
+
+                <button class="icon-button" title="Notifications">
+                    ♢
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button class="top-avatar">
+                    D
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <div class="eyebrow">
+                    RECRUITMENT COMMAND CENTER
+                </div>
+
+                <h1>
+                    Good morning,
+                    <span>Recruiting Team</span>
+                </h1>
+
+                <p>
+                    Monitor your entire hiring operation from one place.
+                    Track candidates, interviews and pipeline movement in real time.
+                </p>
+
+            </div>
+
+            <div class="hero-actions">
+
+                <a class="secondary-action" href="applications.html">
+                    View Pipeline
+                </a>
+
+                <a class="primary-action" href="jobs.html">
+                    + Create Job
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- KPI CARDS -->
+
+        <section class="metrics-grid">
+
+            <article class="metric-card purple-card">
+
+                <div class="metric-top">
+                    <span class="metric-label">TOTAL JOBS</span>
+                    <span class="metric-symbol">▣</span>
+                </div>
+
+                <div class="metric-value" id="jobCount">
+                    0
+                </div>
+
+                <div class="metric-footer">
+                    <span class="trend positive">↗ Live</span>
+                    <span>open positions</span>
+                </div>
+
+                <div class="metric-orb"></div>
+
+            </article>
+
+
+            <article class="metric-card cyan-card">
+
+                <div class="metric-top">
+                    <span class="metric-label">CANDIDATES</span>
+                    <span class="metric-symbol">◉</span>
+                </div>
+
+                <div class="metric-value" id="candidateCount">
+                    0
+                </div>
+
+                <div class="metric-footer">
+                    <span class="trend positive">↗ Active</span>
+                    <span>talent profiles</span>
+                </div>
+
+                <div class="metric-orb"></div>
+
+            </article>
+
+
+            <article class="metric-card pink-card">
+
+                <div class="metric-top">
+                    <span class="metric-label">APPLICATIONS</span>
+                    <span class="metric-symbol">◫</span>
+                </div>
+
+                <div class="metric-value" id="applicationCount">
+                    0
+                </div>
+
+                <div class="metric-footer">
+                    <span class="trend positive">↗ Tracking</span>
+                    <span>in pipeline</span>
+                </div>
+
+                <div class="metric-orb"></div>
+
+            </article>
+
+
+            <article class="metric-card green-card">
+
+                <div class="metric-top">
+                    <span class="metric-label">INTERVIEWS</span>
+                    <span class="metric-symbol">◷</span>
+                </div>
+
+                <div class="metric-value" id="interviewCount">
+                    0
+                </div>
+
+                <div class="metric-footer">
+                    <span class="trend positive">↗ Scheduled</span>
+                    <span>sessions</span>
+                </div>
+
+                <div class="metric-orb"></div>
+
+            </article>
+
+        </section>
+
+
+        <!-- MAIN ANALYTICS GRID -->
+
+        <section class="dashboard-grid-large">
+
+            <!-- PIPELINE -->
+
+            <article class="panel pipeline-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            TALENT FLOW
+                        </span>
+
+                        <h2>
+                            Hiring Pipeline
+                        </h2>
+                    </div>
+
+                    <a href="applications.html" class="panel-link">
+                        Open pipeline →
+                    </a>
+
+                </div>
+
+
+                <div class="pipeline-chart">
+
+                    <div class="pipeline-step">
+                        <div class="pipeline-number screening-number">
+                            <span id="screeningCount">0</span>
+                        </div>
+
+                        <div class="pipeline-name">
+                            Screening
+                        </div>
+
+                        <div class="pipeline-bar">
+                            <span id="screeningBar"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="pipeline-line"></div>
+
+
+                    <div class="pipeline-step">
+                        <div class="pipeline-number interview-number">
+                            <span id="interviewStageCount">0</span>
+                        </div>
+
+                        <div class="pipeline-name">
+                            Interview
+                        </div>
+
+                        <div class="pipeline-bar">
+                            <span id="interviewBar"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="pipeline-line"></div>
+
+
+                    <div class="pipeline-step">
+                        <div class="pipeline-number offer-number">
+                            <span id="offerCount">0</span>
+                        </div>
+
+                        <div class="pipeline-name">
+                            Offer
+                        </div>
+
+                        <div class="pipeline-bar">
+                            <span id="offerBar"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="pipeline-line"></div>
+
+
+                    <div class="pipeline-step">
+                        <div class="pipeline-number hired-number">
+                            <span id="hiredCount">0</span>
+                        </div>
+
+                        <div class="pipeline-name">
+                            Hired
+                        </div>
+
+                        <div class="pipeline-bar">
+                            <span id="hiredBar"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <article class="panel quick-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            SHORTCUTS
+                        </span>
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <a href="jobs.html" class="quick-action">
+                        <span class="quick-icon purple">
+                            +
+                        </span>
+
+                        <span>
+                            <strong>Create Job</strong>
+                            <small>Open a position</small>
+                        </span>
+
+                        <b>→</b>
+                    </a>
+
+
+                    <a href="candidates.html" class="quick-action">
+                        <span class="quick-icon cyan">
+                            +
+                        </span>
+
+                        <span>
+                            <strong>Add Candidate</strong>
+                            <small>Add talent profile</small>
+                        </span>
+
+                        <b>→</b>
+                    </a>
+
+
+                    <a href="interviews.html" class="quick-action">
+                        <span class="quick-icon pink">
+                            ◷
+                        </span>
+
+                        <span>
+                            <strong>Schedule Interview</strong>
+                            <small>Book a session</small>
+                        </span>
+
+                        <b>→</b>
+                    </a>
+
+
+                    <a href="feedback.html" class="quick-action">
+                        <span class="quick-icon green">
+                            ✦
+                        </span>
+
+                        <span>
+                            <strong>Add Feedback</strong>
+                            <small>Review candidate</small>
+                        </span>
+
+                        <b>→</b>
+                    </a>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- LOWER GRID -->
+
+        <section class="dashboard-grid-two">
+
+
+            <!-- APPLICATION TABLE -->
+
+            <article class="panel applications-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            LIVE PIPELINE
+                        </span>
+
+                        <h2>
+                            Recent Applications
+                        </h2>
+                    </div>
+
+                    <a href="applications.html" class="panel-link">
+                        View all →
+                    </a>
+
+                </div>
+
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+                            <th>Candidate</th>
+                            <th>Position</th>
+                            <th>Stage</th>
+                            <th>Applied</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="applicationTable">
+
+                        <tr>
+                            <td colspan="4" class="table-loading">
+                                Loading applications...
+                            </td>
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </article>
+
+
+            <!-- INTERVIEWS -->
+
+            <article class="panel interviews-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            CALENDAR
+                        </span>
+
+                        <h2>
+                            Upcoming Interviews
+                        </h2>
+                    </div>
+
+                    <a href="interviews.html" class="panel-link">
+                        Schedule →
+                    </a>
+
+                </div>
+
+
+                <div id="interviewTimeline" class="timeline">
+
+                    <div class="table-loading">
+                        Loading interviews...
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- BOTTOM GRID -->
+
+        <section class="dashboard-grid-two">
+
+
+            <!-- JOB PERFORMANCE -->
+
+            <article class="panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            RECRUITMENT
+                        </span>
+
+                        <h2>
+                            Open Positions
+                        </h2>
+                    </div>
+
+                    <a href="jobs.html" class="panel-link">
+                        Manage →
+                    </a>
+
+                </div>
+
+
+                <div id="jobPerformance" class="job-performance">
+
+                    <div class="table-loading">
+                        Loading jobs...
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- ACTIVITY -->
+
+            <article class="panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-kicker">
+                            RECENT
+                        </span>
+
+                        <h2>
+                            Activity Feed
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div id="activityFeed" class="activity-feed">
+
+                    <div class="table-loading">
+                        Loading activity...
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <footer class="footer">
+
+            <span>
+                HireFlow Recruitment Intelligence Platform
+            </span>
+
+            <span>
+                Java 17 · Spring Boot · MySQL
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

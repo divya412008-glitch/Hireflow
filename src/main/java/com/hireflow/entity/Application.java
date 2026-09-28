@@ -25,8 +25,9 @@ public class Application {
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-    @Column(nullable = false)
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "pipeline_stage_id", nullable = false)
+    private PipelineStage pipelineStage;
 
     @Column(nullable = false)
     private LocalDateTime appliedAt;

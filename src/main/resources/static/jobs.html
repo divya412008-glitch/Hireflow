@@ -61,6 +61,210 @@
             background: rgba(255,255,255,0.03);
         }
 
+
+        .job-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(2, 5, 14, 0.78);
+            backdrop-filter: blur(14px);
+        }
+
+        .job-modal.open {
+            display: flex;
+        }
+
+        .job-modal-panel {
+            width: min(680px, 100%);
+            max-height: min(88vh, 760px);
+            overflow: auto;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at top right, rgba(139,92,246,0.14), transparent 34%),
+                linear-gradient(145deg, rgba(18,25,46,0.98), rgba(8,12,24,0.98));
+            box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+        }
+
+        .job-modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .job-modal-eyebrow {
+            color: #9e8bff;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+        }
+
+        .job-modal-head h2 {
+            margin-top: 6px;
+            font-size: 24px;
+            letter-spacing: -0.8px;
+        }
+
+        .job-modal-head p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .job-modal-close {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.04);
+            color: #d8deea;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .job-form {
+            display: grid;
+            gap: 14px;
+        }
+
+        .job-form-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 12px;
+        }
+
+        .job-field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .job-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .job-field label {
+            color: #aeb8cc;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .job-field input,
+        .job-field textarea,
+        .job-field select {
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            outline: none;
+            padding: 10px 11px;
+            background: rgba(255,255,255,0.035);
+            color: #f3f5fa;
+            font: inherit;
+            font-size: 10px;
+        }
+
+        .job-field textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .job-field input:focus,
+        .job-field textarea:focus,
+        .job-field select:focus {
+            border-color: rgba(139,92,246,0.5);
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.08);
+        }
+
+        .job-form-hint {
+            color: #69748a;
+            font-size: 8px;
+            line-height: 1.5;
+        }
+
+        .job-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding-top: 4px;
+        }
+
+        .job-form-btn {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            cursor: pointer;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .job-form-btn.secondary {
+            color: #c8d0df;
+            background: rgba(255,255,255,0.035);
+        }
+
+        .job-form-btn.primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+        }
+
+        .job-form-btn:disabled {
+            cursor: wait;
+            opacity: 0.65;
+        }
+
+        .job-toast {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 1100;
+            max-width: 340px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            background: rgba(13,18,33,0.95);
+            color: #e9edf6;
+            box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+            font-size: 9px;
+            line-height: 1.5;
+            transform: translateY(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.22s ease;
+        }
+
+        .job-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 680px) {
+            .job-modal {
+                padding: 12px;
+            }
+
+            .job-modal-panel {
+                padding: 18px;
+            }
+
+            .job-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .job-field.full {
+                grid-column: auto;
+            }
+        }
+
         .job-controls {
             display: flex;
             justify-content: space-between;
@@ -444,11 +648,12 @@
                     Dashboard
                 </a>
 
-                <a
-                    href="index.html"
+                <button
+                    type="button"
+                    id="openCreateJob"
                     class="jobs-primary">
                     + Create Job
-                </a>
+                </button>
 
             </div>
 
@@ -510,7 +715,259 @@
 </div>
 
 
+
+    <div
+        id="jobModal"
+        class="job-modal"
+        aria-hidden="true">
+
+        <div
+            class="job-modal-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="jobModalTitle">
+
+            <div class="job-modal-head">
+
+                <div>
+                    <div class="job-modal-eyebrow">NEW REQUISITION</div>
+                    <h2 id="jobModalTitle">Create Job</h2>
+                    <p>
+                        Add a new position to your HireFlow workspace.
+                        The job will be saved through the existing REST API.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="closeJobModal"
+                    class="job-modal-close"
+                    aria-label="Close">
+                    ×
+                </button>
+
+            </div>
+
+            <form
+                id="createJobForm"
+                class="job-form">
+
+                <div class="job-form-grid">
+
+                    <div class="job-field">
+                        <label for="jobTitle">Job Title</label>
+                        <input
+                            id="jobTitle"
+                            name="title"
+                            type="text"
+                            maxlength="120"
+                            placeholder="e.g. Java Developer"
+                            required>
+                    </div>
+
+                    <div class="job-field">
+                        <label for="jobLocation">Location</label>
+                        <input
+                            id="jobLocation"
+                            name="location"
+                            type="text"
+                            maxlength="120"
+                            placeholder="e.g. Chennai"
+                            required>
+                    </div>
+
+                    <div class="job-field">
+                        <label for="jobExperience">Experience (years)</label>
+                        <input
+                            id="jobExperience"
+                            name="experience"
+                            type="number"
+                            min="0"
+                            max="50"
+                            step="1"
+                            placeholder="2"
+                            required>
+                    </div>
+
+                    <div class="job-field">
+                        <label for="jobStatus">Status</label>
+                        <select
+                            id="jobStatus"
+                            name="status">
+                            <option value="OPEN">OPEN</option>
+                            <option value="CLOSED">CLOSED</option>
+                        </select>
+                    </div>
+
+                    <div class="job-field full">
+                        <label for="jobDescription">Description</label>
+                        <textarea
+                            id="jobDescription"
+                            name="description"
+                            maxlength="2000"
+                            placeholder="Describe the role, responsibilities and requirements..."
+                            required></textarea>
+                        <div class="job-form-hint">
+                            Keep the description concise and useful for recruiters reviewing the requisition.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="job-form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelJobModal"
+                        class="job-form-btn secondary">
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="createJobSubmit"
+                        class="job-form-btn primary">
+                        Create Job
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div
+        id="jobToast"
+        class="job-toast"
+        role="status"
+        aria-live="polite"></div>
+
+
 <script>
+
+
+const jobModal = document.getElementById("jobModal");
+const createJobForm = document.getElementById("createJobForm");
+const createJobSubmit = document.getElementById("createJobSubmit");
+const jobToast = document.getElementById("jobToast");
+
+function showJobToast(message) {
+    jobToast.textContent = message;
+    jobToast.classList.add("show");
+
+    clearTimeout(showJobToast.timeout);
+
+    showJobToast.timeout = setTimeout(() => {
+        jobToast.classList.remove("show");
+    }, 3200);
+}
+
+function openJobModal() {
+    jobModal.classList.add("open");
+    jobModal.setAttribute("aria-hidden", "false");
+    document.getElementById("jobTitle").focus();
+}
+
+function closeJobModal() {
+    jobModal.classList.remove("open");
+    jobModal.setAttribute("aria-hidden", "true");
+}
+
+async function createJob(event) {
+    event.preventDefault();
+
+    const payload = {
+        title: document.getElementById("jobTitle").value.trim(),
+        location: document.getElementById("jobLocation").value.trim(),
+        experience: Number(document.getElementById("jobExperience").value),
+        status: document.getElementById("jobStatus").value,
+        description: document.getElementById("jobDescription").value.trim()
+    };
+
+    if (!payload.title || !payload.location || !payload.description) {
+        showJobToast("Please complete all required fields.");
+        return;
+    }
+
+    if (!Number.isInteger(payload.experience) || payload.experience < 0) {
+        showJobToast("Experience must be a whole number of years.");
+        return;
+    }
+
+    createJobSubmit.disabled = true;
+    createJobSubmit.textContent = "Creating...";
+
+    try {
+        const response = await fetch("/api/jobs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const raw = await response.text();
+
+        let data = null;
+
+        try {
+            data = raw ? JSON.parse(raw) : null;
+        } catch {
+            data = null;
+        }
+
+        if (!response.ok) {
+            const message =
+                data?.message ||
+                data?.error ||
+                raw ||
+                "Unable to create the job.";
+
+            throw new Error(message);
+        }
+
+        createJobForm.reset();
+        document.getElementById("jobStatus").value = "OPEN";
+        closeJobModal();
+
+        showJobToast("Job created successfully.");
+
+        await loadData();
+
+    } catch (error) {
+        console.error("Create job error:", error);
+        showJobToast(error.message || "Unable to create the job.");
+    } finally {
+        createJobSubmit.disabled = false;
+        createJobSubmit.textContent = "Create Job";
+    }
+}
+
+document.getElementById("openCreateJob")
+    .addEventListener("click", openJobModal);
+
+document.getElementById("closeJobModal")
+    .addEventListener("click", closeJobModal);
+
+document.getElementById("cancelJobModal")
+    .addEventListener("click", closeJobModal);
+
+jobModal.addEventListener("click", (event) => {
+    if (event.target === jobModal) {
+        closeJobModal();
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && jobModal.classList.contains("open")) {
+        closeJobModal();
+    }
+});
+
+createJobForm.addEventListener("submit", createJob);
+
 
 let allJobs = [];
 let allApplications = [];

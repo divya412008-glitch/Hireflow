@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="HireFlow Talent Command Center Login">
+
+    <title>HireFlow | Login</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 12% 18%,
+                    rgba(124, 92, 255, 0.20),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 88% 82%,
+                    rgba(0, 217, 255, 0.13),
+                    transparent 30%
+                ),
+
+                #070914;
+
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+
+        .background-grid {
+
+            position: fixed;
+
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            pointer-events: none;
+        }
+
+
+        .login-shell {
+
+            width: min(
+                1100px,
+                94%
+            );
+
+            min-height: 650px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 430px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 30px;
+
+            background:
+                rgba(13,16,30,0.84);
+
+            backdrop-filter:
+                blur(24px);
+
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,0.45);
+
+            overflow: hidden;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =========================================
+           LEFT BRAND PANEL
+        ========================================= */
+
+        .brand-panel {
+
+            padding: 70px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(124,92,255,0.17),
+                    transparent 35%
+                ),
+
+                radial-gradient(
+                    circle at 80% 75%,
+                    rgba(0,217,255,0.08),
+                    transparent 30%
+                );
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 50px;
+        }
+
+
+        .brand-mark {
+
+            width: 52px;
+            height: 52px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c5cff,
+                    #00d9ff
+                );
+
+            color: white;
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 12px 35px
+                rgba(124,92,255,0.35);
+        }
+
+
+        .brand-name {
+
+            font-size: 24px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-subtitle {
+
+            color: #7f89a8;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        .eyebrow {
+
+            color: #8d7cff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .brand-panel h1 {
+
+            max-width: 620px;
+
+            font-size:
+                clamp(
+                    42px,
+                    5vw,
+                    68px
+                );
+
+            line-height: 1.02;
+
+            margin:
+                0 0 24px;
+        }
+
+
+        .brand-panel h1 span {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #9f8cff,
+                    #46e6ff
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .brand-panel p {
+
+            max-width: 580px;
+
+            color: #9da6c4;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+        .feature-row {
+
+            display: flex;
+
+            gap: 14px;
+
+            margin-top: 35px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .feature {
+
+            padding:
+                12px 16px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.03);
+
+            color: #c4cae0;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           LOGIN PANEL
+        ========================================= */
+
+        .login-panel {
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border-left:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            padding:
+                50px 45px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .login-panel h2 {
+
+            font-size: 32px;
+
+            margin:
+                0 0 10px;
+        }
+
+
+        .login-panel > p {
+
+            color: #858da7;
+
+            line-height: 1.6;
+
+            margin:
+                0 0 30px;
+        }
+
+
+        .field {
+
+            margin-bottom: 20px;
+        }
+
+
+        .field label {
+
+            display: block;
+
+            color: #cfd4e6;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+
+            font-weight: 600;
+        }
+
+
+        .field input {
+
+            width: 100%;
+
+            height: 52px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.09);
+
+            background:
+                rgba(5,8,18,0.7);
+
+            color: white;
+
+            padding:
+                0 16px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .field input:focus {
+
+            border-color:
+                #7c5cff;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(124,92,255,0.12);
+        }
+
+
+        .login-button {
+
+            width: 100%;
+
+            height: 54px;
+
+            border: 0;
+
+            border-radius: 15px;
+
+            cursor: pointer;
+
+            margin-top: 8px;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c5cff,
+                    #596cff
+                );
+
+            box-shadow:
+                0 16px 35px
+                rgba(124,92,255,0.28);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .login-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 20px 40px
+                rgba(124,92,255,0.35);
+        }
+
+
+        .login-button:disabled {
+
+            opacity: 0.7;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+
+        .error {
+
+            display: none;
+
+            margin-top: 18px;
+
+            padding:
+                12px 14px;
+
+            border-radius: 12px;
+
+            color: #ff9d9d;
+
+            background:
+                rgba(255,70,70,0.09);
+
+            border:
+                1px solid
+                rgba(255,70,70,0.18);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           DEMO USERS
+        ========================================= */
+
+        .demo-title {
+
+            margin-top: 25px;
+
+            color: #777f9c;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        .demo-users {
+
+            margin-top: 10px;
+
+            display: grid;
+
+            gap: 8px;
+        }
+
+
+        .demo-user {
+
+            padding:
+                10px 12px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.025);
+        }
+
+
+        .demo-user-role {
+
+            color: #b7adff;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            margin-bottom: 3px;
+        }
+
+
+        .demo-user-email {
+
+            color: #a2aac0;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .login-shell {
+
+                grid-template-columns: 1fr;
+
+                min-height: auto;
+            }
+
+
+            .brand-panel {
+
+                padding:
+                    45px 35px;
+            }
+
+
+            .brand-panel h1 {
+
+                font-size: 42px;
+            }
+
+
+            .login-panel {
+
+                border-left: 0;
+
+                border-top:
+                    1px solid
+                    rgba(255,255,255,0.07);
+
+                padding:
+                    40px 35px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body data-public="true">
+
+
+<div class="background-grid"></div>
+
+
+<div class="login-shell">
+
+
+    <!-- =========================================
+         LEFT SIDE
+    ========================================== -->
+
+    <section class="brand-panel">
+
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                H
+            </div>
+
+
+            <div>
+
+                <div class="brand-name">
+                    HireFlow
+                </div>
+
+
+                <div class="brand-subtitle">
+                    Talent Command Center
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="eyebrow">
+            RECRUITMENT OPERATIONS
+        </div>
+
+
+        <h1>
+
+            Hire smarter.
+            <span>Move faster.</span>
+
+        </h1>
+
+
+        <p>
+
+            A centralized hiring platform for
+            jobs, candidates, applications,
+            interviews, evaluations and
+            hiring decisions.
+
+        </p>
+
+
+        <div class="feature-row">
+
+            <div class="feature">
+                ✦ Candidate Intelligence
+            </div>
+
+            <div class="feature">
+                ◷ Interview Scheduling
+            </div>
+
+            <div class="feature">
+                ▣ Hiring Pipeline
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================================
+         RIGHT SIDE
+    ========================================== -->
+
+    <section class="login-panel">
+
+
+        <h2>
+            Welcome back
+        </h2>
+
+
+        <p>
+            Sign in to access your HireFlow
+            recruitment workspace.
+        </p>
+
+
+        <form id="loginForm">
+
+
+            <div class="field">
+
+                <label for="email">
+                    Email
+                </label>
+
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="password">
+                    Password
+                </label>
+
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required>
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="loginButton"
+                class="login-button">
+
+                Sign In →
+
+            </button>
+
+
+        </form>
+
+
+        <div
+            id="loginError"
+            class="error">
+
+            Invalid email or password.
+
+        </div>
+
+
+        <!-- =====================================
+             AVAILABLE DEMO USERS
+        ====================================== -->
+
+        <div class="demo-title">
+            Demo Accounts
+        </div>
+
+
+        <div class="demo-users">
+
+
+            <div class="demo-user">
+
+                <div class="demo-user-role">
+                    ADMIN
+                </div>
+
+                <div class="demo-user-email">
+                    admin@hireflow.com
+                    &nbsp; / &nbsp;
+                    admin123
+                </div>
+
+            </div>
+
+
+            <div class="demo-user">
+
+                <div class="demo-user-role">
+                    RECRUITER
+                </div>
+
+                <div class="demo-user-email">
+                    recruiter@hireflow.com
+                    &nbsp; / &nbsp;
+                    recruiter123
+                </div>
+
+            </div>
+
+
+            <div class="demo-user">
+
+                <div class="demo-user-role">
+                    HIRING MANAGER
+                </div>
+
+                <div class="demo-user-email">
+                    manager@hireflow.com
+                    &nbsp; / &nbsp;
+                    manager123
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+const loginForm =
+    document.getElementById(
+        "loginForm"
+    );
+
+
+const loginError =
+    document.getElementById(
+        "loginError"
+    );
+
+
+const loginButton =
+    document.getElementById(
+        "loginButton"
+    );
+
+
+/*
+=====================================================
+HIRE FLOW DEMO USERS
+=====================================================
+*/
+
+const USERS = [
+
+    {
+        email: "admin@hireflow.com",
+        password: "admin123",
+        name: "Admin",
+        role: "ADMIN"
+    },
+
+    {
+        email: "recruiter@hireflow.com",
+        password: "recruiter123",
+        name: "Recruiter",
+        role: "RECRUITER"
+    },
+
+    {
+        email: "manager@hireflow.com",
+        password: "manager123",
+        name: "Hiring Manager",
+        role: "HIRING_MANAGER"
+    }
+
+];
+
+
+/*
+=====================================================
+LOGIN
+=====================================================
+*/
+
+loginForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+
+        loginError.style.display =
+            "none";
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        const user =
+            USERS.find(
+                account =>
+                    account.email === email &&
+                    account.password === password
+            );
+
+
+        /*
+        =============================================
+        INVALID LOGIN
+        =============================================
+        */
+
+        if (!user) {
+
+            loginError.textContent =
+                "Invalid email or password.";
+
+            loginError.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        /*
+        =============================================
+        SUCCESSFUL LOGIN
+        =============================================
+        */
+
+        loginButton.disabled =
+            true;
+
+        loginButton.textContent =
+            "Signing in...";
+
+
+        sessionStorage.setItem(
+            "hireflow_authenticated",
+            "true"
+        );
+
+
+        sessionStorage.setItem(
+            "hireflow_user",
+            JSON.stringify(user)
+        );
+
+
+        /*
+        =============================================
+        GO TO DASHBOARD
+        =============================================
+        */
+
+        setTimeout(
+            function () {
+
+                window.location.replace(
+                    "index.html"
+                );
+
+            },
+            350
+        );
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
